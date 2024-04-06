@@ -1,6 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:ssen_admin/utils/constants/colors.dart';
+import 'package:ssen_admin/utils/constants/global_varable.dart';
 import 'package:ssen_admin/utils/helper_function.dart';
+
+import '../component/dashboard.dart';
+import '../component/home.dart';
 
 class MainPage extends StatefulWidget {
   const MainPage({super.key});
@@ -14,8 +18,8 @@ class _MainPageState extends State<MainPage> {
   int currentIndex = 0;
   // final screens = [Home(), Subscription(), Favorite(), Cart(), Order()];
   final screens = [
-    Center(child: Text("1")),
-    Center(child: Text("2")),
+     
+    Home(),
     Center(child: Text("3")),
     Center(child: Text("4")),
     Center(child: Text("5")),

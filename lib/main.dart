@@ -27,7 +27,7 @@ class MyApp extends StatelessWidget {
       // home: const About(),
       // home: const Announcment(),
       // home: EnterNewPassword(),
-      home: Intermediate(),
+      // home: Intermediate(),
 
       // home: const TermAndCondition(),
       // home: MainPage(),
@@ -38,7 +38,7 @@ class MyApp extends StatelessWidget {
       // home: Companyprofile(),
       // home: Purchase(),
       // home: const TermAndCondition(),
-      // home: MainPage(),
+      home: MainPage(),
 
       // home: DesktopResponsive(),
       // home: Intermediate(),
