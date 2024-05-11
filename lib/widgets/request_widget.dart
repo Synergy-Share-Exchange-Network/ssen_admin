@@ -2,28 +2,37 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/foundation/key.dart';
 import 'package:flutter/src/widgets/framework.dart';
+import 'package:ssen_admin/screens/component/request.dart';
+import 'package:ssen_admin/screens/request_detail.dart';
 
 
 import '../../services/theme/text_theme.dart';
 
-import '../screens/company_detail.dart';
-import '../screens/user_detail.dart';
 import '../utils/constants/colors.dart';
 import '../utils/helper_function.dart';
 
-class CompanyWidget extends StatelessWidget {
-  const CompanyWidget({Key? key}) : super(key: key);
+class RequestWidget extends StatelessWidget {
+  const RequestWidget({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     bool dark = SHelperFunction.isDarkMode(context);
     return GestureDetector(
       onTap: () {
-        Navigator.push(
+       Navigator.push(
           context,
           MaterialPageRoute(
               builder: (context) =>
-                  CompanyDetail()), // Replace ShareholderDetailPage() with your actual detail page
+               Requestdetail(
+        requestStatus: 'Pending',
+        requestDate: 'April 25, 2024',
+        requestDescription:
+            'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed efficitur, ante nec aliquam consequat, ligula est pellentesque libero, id laoreet elit justo id purus.',
+        requesterName: 'John Doe',
+        requesterEmail: 'john.doe@example.com',
+        requesterPhoneNumber: '+1234567890',
+        requesterAddress: '123 Main St, City, Country',
+      ),), // Replace ShareholderDetailPage() with your actual detail page
         );
       },
       child: Container(
@@ -94,7 +103,7 @@ class CompanyWidget extends StatelessWidget {
                             width: 3,
                           ),
                           Text(
-                            "10k+ shares",
+                            "pending",
                             style: dark
                                 ? STextTheme.darkTextTheme.bodySmall
                                 : STextTheme.lightTextTheme.bodySmall,

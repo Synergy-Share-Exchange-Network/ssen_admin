@@ -7,16 +7,16 @@ import '../../utils/constants.dart';
 import '../../utils/constants/colors.dart';
 import '../../utils/constants/navbar.dart';
 import '../../utils/helper_function.dart';
-import 'company_analytics.dart';
+import '../component/company_analytics.dart';
 
-class Home extends StatefulWidget {
-  const Home({super.key});
+class HomeDesktop extends StatefulWidget {
+  const HomeDesktop({super.key});
 
   @override
-  State<Home> createState() => _HomeState();
+  State<HomeDesktop> createState() => _HomeDesktopState();
 }
 
-class _HomeState extends State<Home> {
+class _HomeDesktopState extends State<HomeDesktop> {
   @override
   Widget build(BuildContext context) {
     bool dark = SHelperFunction.isDarkMode(context);

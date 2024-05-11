@@ -1,4 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:ssen_admin/screens/partial%20screen/company_desktop.dart';
+import 'package:ssen_admin/screens/partial%20screen/home_desktop.dart';
+import 'package:ssen_admin/screens/partial%20screen/request_desktop.dart';
+import 'package:ssen_admin/screens/partial%20screen/user_desktop.dart';
 import 'package:ssen_admin/utils/constants.dart';
 import 'package:ssen_admin/utils/constants/colors.dart';
 import 'package:ssen_admin/utils/constants/image_Strings.dart';
@@ -19,374 +23,7 @@ class _DesktopResponsiveState extends State<DesktopResponsive> {
   Widget build(BuildContext context) {
     return Scaffold(
       key: _scaffoldKey,
-      drawer: Drawer(
-        child: SingleChildScrollView(
-          child: Container(
-            padding: const EdgeInsets.all(12),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                // const SizedBox(height: 10),
-                // const Align(
-                //     alignment: Alignment.centerLeft,
-                //     child: Text(
-                //       "Wubet Ayalew",
-                //       style: TextStyle(fontWeight: FontWeight.bold),
-                //     )),
-                const SizedBox(
-                  height: 20,
-                ),
-
-                Center(
-                  child: InkWell(
-                    onTap: () {
-                      setState(() {
-                        index = 5;
-                      });
-                      Navigator.pop(context);
-                    },
-                    child: Container(
-                      width: 130,
-                      height: 130,
-                      decoration: BoxDecoration(
-                          shape: BoxShape.circle,
-                          border: Border.all(color: Colors.blue, width: 3),
-                          image: DecorationImage(
-                              fit: BoxFit.cover,
-                              image: NetworkImage(SImages.lightAppLogo))),
-                    ),
-                  ),
-                ),
-                const SizedBox(
-                  height: 10,
-                ),
-                Center(
-                  child: InkWell(
-                    onTap: () {
-                      setState(() {
-                        index = 5;
-                      });
-                      Navigator.pop(context);
-                    },
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      children: [
-                        Text(
-                          'Wubet ayalew',
-                          style: const TextStyle(fontWeight: FontWeight.bold),
-                        ),
-                        Text("wubetayalew@gmail.com")
-                      ],
-                    ),
-                  ),
-                ),
-                const Divider(),
-                index != 0
-                    ? DrawerItem(
-                        icon: Icons.dashboard,
-                        title: "Dashboard",
-                        callback: () {
-                          setState(() {
-                            index = 0;
-                          });
-                          Navigator.pop(context);
-                        },
-                      )
-                    : SelectedDrawerItem(
-                        icon: Icons.dashboard,
-                        title: "Dashboard",
-                        callback: () {
-                          setState(() {
-                            index = 0;
-                          });
-                          Navigator.pop(context);
-                        },
-                      ),
-                index != 1
-                    ? DrawerItem(
-                        icon: Icons.admin_panel_settings,
-                        title: "User",
-                        callback: () {
-                          setState(() {
-                            index = 1;
-                          });
-                          Navigator.pop(context);
-                        },
-                      )
-                    : SelectedDrawerItem(
-                        icon: Icons.admin_panel_settings,
-                        title: "User",
-                        callback: () {
-                          setState(() {
-                            index = 1;
-                          });
-                          Navigator.pop(context);
-                        },
-                      ),
-                index != 2
-                    ? DrawerItem(
-                        icon: Icons.factory,
-                        title: "Company",
-                        callback: () {
-                          setState(() {
-                            index = 2;
-                          });
-                          Navigator.pop(context);
-                        },
-                      )
-                    : SelectedDrawerItem(
-                        icon: Icons.factory,
-                        title: "Company",
-                        callback: () {
-                          setState(() {
-                            index = 2;
-                          });
-                          Navigator.pop(context);
-                        },
-                      ),
-                index != 3
-                    ? DrawerItem(
-                        icon: Icons.request_page,
-                        title: "Request",
-                        callback: () {
-                          setState(() {
-                            index = 3;
-                          });
-                          Navigator.pop(context);
-                        },
-                      )
-                    : SelectedDrawerItem(
-                        icon: Icons.request_page,
-                        title: "Request",
-                        callback: () {
-                          setState(() {
-                            index = 3;
-                          });
-                          Navigator.pop(context);
-                        },
-                      ),
-                index != 4
-                    ? DrawerItem(
-                        icon: Icons.admin_panel_settings,
-                        title: "Admin",
-                        callback: () {
-                          setState(() {
-                            index = 4;
-                          });
-                          Navigator.pop(context);
-                        },
-                      )
-                    : SelectedDrawerItem(
-                        icon: Icons.admin_panel_settings,
-                        title: "Admin",
-                        callback: () {
-                          setState(() {
-                            index = 4;
-                          });
-                          Navigator.pop(context);
-                        },
-                      ),
-                const Divider(),
-                index != 5
-                    ? DrawerItem(
-                        icon: Icons.person,
-                        title: "Edit Admin",
-                        callback: () {
-                          setState(() {
-                            index = 5;
-                          });
-                          Navigator.pop(context);
-                        },
-                      )
-                    : SelectedDrawerItem(
-                        icon: Icons.person,
-                        title: "Edit Admin",
-                        callback: () {
-                          setState(() {
-                            index = 5;
-                          });
-                          Navigator.pop(context);
-                        },
-                      ),
-                index != 6
-                    ? DrawerItem(
-                        icon: Icons.location_on,
-                        title: "My Address",
-                        callback: () {
-                          setState(() {
-                            index = 6;
-                          });
-                          Navigator.pop(context);
-                        },
-                      )
-                    : SelectedDrawerItem(
-                        icon: Icons.location_on,
-                        title: "My Address",
-                        callback: () {
-                          setState(() {
-                            index = 6;
-                          });
-                          Navigator.pop(context);
-                        },
-                      ),
-                index != 7
-                    ? DrawerItem(
-                        icon: Icons.info,
-                        title: "About Us",
-                        callback: () {
-                          // setState(() {
-                          //   index = 7;
-                          // });
-                          Navigator.pop(context);
-                          // Navigator.pushNamed(context, AboutUs.route);
-                        },
-                      )
-                    : SelectedDrawerItem(
-                        icon: Icons.info,
-                        title: "About Us",
-                        callback: () {
-                          // setState(() {
-                          //   index = 7;
-                          // });
-                          Navigator.pop(context);
-                          // Navigator.pushNamed(context, AboutUs.route);
-                        },
-                      ),
-                index != 8
-                    ? DrawerItem(
-                        icon: Icons.logout,
-                        title: "Log Out",
-                        callback: () {
-                          showDialog(
-                            context: context,
-                            builder: (ctx) => AlertDialog(
-                              title: const Text("Log out"),
-                              content: const Text(
-                                  "Are You sure you want to log out?"),
-                              actions: <Widget>[
-                                Row(
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceEvenly,
-                                  children: [
-                                    TextButton(
-                                      onPressed: () {
-                                        Navigator.of(ctx).pop();
-                                      },
-                                      child: Container(
-                                        // color: Colors.green,
-                                        padding: const EdgeInsets.all(14),
-                                        child: const Text("Cancel"),
-                                      ),
-                                    ),
-                                    TextButton(
-                                      onPressed: () {
-                                        // FirebaseAuth.instance.signOut();
-                                        // Navigator.pushReplacementNamed(
-                                        //     context, Login.route);
-                                      },
-                                      child: Container(
-                                        // color: Colors.green,
-                                        padding: const EdgeInsets.all(14),
-                                        child: const Text("Okay"),
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                              ],
-                            ),
-                          );
-                        },
-                      )
-                    : SelectedDrawerItem(
-                        icon: Icons.logout,
-                        title: "Log Out",
-                        callback: () {},
-                      ),
-                index != 9
-                    ? DrawerItem(
-                        icon: Icons.exit_to_app,
-                        title: "Exit",
-                        callback: () {
-                          setState(() {
-                            index = 9;
-                          });
-                          Navigator.pop(context);
-                        },
-                      )
-                    : SelectedDrawerItem(
-                        icon: Icons.exit_to_app,
-                        title: "Exit",
-                        callback: () {
-                          setState(() {
-                            index = 9;
-                          });
-                          Navigator.pop(context);
-                        },
-                      ),
-                const Divider(),
-                index != 10
-                    ? DrawerItem(
-                        icon: Icons.settings,
-                        title: "Settings",
-                        callback: () {
-                          Navigator.pop(context);
-                          // Navigator.pushNamed(context, Setting.route);
-                        },
-                      )
-                    : SelectedDrawerItem(
-                        icon: Icons.settings,
-                        title: "Settings",
-                        callback: () {
-                          Navigator.pop(context);
-                          // Navigator.pushNamed(context, Setting.route);
-                        },
-                      ),
-                index != 11
-                    ? DrawerItem(
-                        icon: Icons.format_align_center,
-                        title: "Terms and Condition",
-                        callback: () {
-                          // setState(() {
-                          //   index = 11;
-                          // });
-
-                          Navigator.pop(context);
-                          // Navigator.pushNamed(
-                          //     context, TermAndCondition.route);
-                        },
-                      )
-                    : SelectedDrawerItem(
-                        icon: Icons.format_align_center,
-                        title: "Terms and Condition",
-                        callback: () {
-                          // setState(() {
-                          //   index = 11;
-                          // });
-                          Navigator.pop(context);
-                          // Navigator.pushNamed(
-                          // context, TermAndCondition.route);
-                        },
-                      ),
-                const Divider(),
-                Container(
-                    margin: const EdgeInsets.all(15),
-                    child: const Text(
-                      "User Channals",
-                      style: TextStyle(
-                          fontSize: 18, color: Color.fromARGB(123, 0, 0, 0)),
-                    )),
-                UserChannel(),
-                UserChannel(),
-                UserChannel(),
-                UserChannel(),
-                UserChannel(),
-                UserChannel(),
-                UserChannel(),
-              ],
-            ),
-          ),
-        ),
-      ),
+     
       body: Row(
         children: [
           if (MediaQuery.of(context).size.width > tabletSize)
@@ -425,7 +62,7 @@ class _DesktopResponsiveState extends State<DesktopResponsive> {
                                     image: DecorationImage(
                                         fit: BoxFit.cover,
                                         image: NetworkImage(
-                                            SImages.lightAppLogo))),
+                                            SImages.employee2))),
                               ),
                             ),
                           ),
@@ -821,12 +458,10 @@ class _DesktopResponsiveState extends State<DesktopResponsive> {
                                   // const AdminPageState(),
                                   // Location()
 
-                                  Center(child: Text("1")),
-                                  Center(child: Text("2")),
-                                  Center(child: Text("3")),
-                                  Center(child: Text("4")),
-
-                                  Center(child: Text("5")),
+                                    HomeDesktop(),
+    UserDesktop(),
+    CompanyDesktop(),
+    RequestPageDesktop(),
 
                                   Container(),
                                   Container(),
@@ -849,9 +484,109 @@ class _DesktopResponsiveState extends State<DesktopResponsive> {
                                 ],
                               ),
                             ),
-                      const Expanded(
+                         const Expanded(
                         child: SizedBox(),
                       ),
+                      SingleChildScrollView(
+                        child: Column(
+                          children: [
+                            Container(
+                              margin: const EdgeInsets.all(8),
+                              child: Card(
+                                elevation: 2,
+                                child: Container(
+                                  width: 200,
+                                  height: 300,
+                                  child: SingleChildScrollView(
+                                    child: Column(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      children: [
+                                        Container(
+                                            margin: const EdgeInsets.all(15),
+                                            child: const Text(
+                                              "Explore",
+                                              style: TextStyle(
+                                                  fontSize: 18,
+                                                  color: Colors.blue),
+                                            )),
+                                        Container(
+                                          margin: const EdgeInsets.symmetric(
+                                              horizontal: 15),
+                                          child: Column(
+                                            children: [
+                                              const ExploreElement(
+                                                icon: Icons.trending_up,
+                                                title: "Trending Product ",
+                                              ),
+                                              const ExploreElement(
+                                                icon: Icons.sports_baseball,
+                                                title: "Sport Product",
+                                              ),
+                                              const ExploreElement(
+                                                icon: Icons.construction,
+                                                title: "Constraction",
+                                              ),
+                                              const ExploreElement(
+                                                icon: Icons.smartphone_sharp,
+                                                title: "Smart Phone",
+                                              ),
+                                              const ExploreElement(
+                                                icon: Icons.laptop,
+                                                title: "Laptop",
+                                              ),
+                                              const ExploreElement(
+                                                icon: Icons
+                                                    .account_balance_rounded,
+                                                title: "House",
+                                              ),
+                                              TextButton(
+                                                  onPressed: () {},
+                                                  child: const Text('See More'))
+                                            ],
+                                          ),
+                                        )
+                                      ],
+                                    ),
+                                  ),
+                                ),
+                              ),
+                            ),
+                            Container(
+                              margin: const EdgeInsets.all(8),
+                              child: Card(
+                                elevation: 2,
+                                child: Container(
+                                  width: 200,
+                                  height: 300,
+                                  child: SingleChildScrollView(
+                                    child: Column(
+                                      children: [
+                                        Container(
+                                            margin: const EdgeInsets.all(15),
+                                            child: const Text(
+                                              "Recomanded Channals",
+                                              style: TextStyle(
+                                                  fontSize: 18,
+                                                  color: Color.fromARGB(
+                                                      123, 0, 0, 0)),
+                                            )),
+                                        SubscribedChannelSmall(),
+                                        SubscribedChannelSmall(),
+                                        SubscribedChannelSmall(),
+                                        SubscribedChannelSmall(),
+                                        SubscribedChannelSmall(),
+                                        SubscribedChannelSmall(),
+                                        SubscribedChannelSmall(),
+                                      ],
+                                    ),
+                                  ),
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
+                      )
                     ],
                   ),
                 ),
@@ -1089,6 +824,46 @@ class SelectedDrawerItem extends StatelessWidget {
             ),
           ],
         ),
+      ),
+    );
+  }
+}
+class SubscribedChannelSmall extends StatelessWidget {
+  const SubscribedChannelSmall({
+    Key? key,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      margin: EdgeInsets.symmetric(horizontal: 15, vertical: 5),
+      child: Row(
+        children: [
+          Container(
+            width: 35,
+            height: 35,
+            decoration: BoxDecoration(
+                border: Border.all(color: Colors.blue, width: 1),
+                shape: BoxShape.circle,
+                image: const DecorationImage(
+                    fit: BoxFit.cover,
+                    image: AssetImage(SImages.lightAppLogo))),
+          ),
+          // const Expanded(flex: 1, child: SizedBox()),
+          const SizedBox(
+            width: 10,
+          ),
+          const SizedBox(
+            width: 100,
+            child: Text(
+              "Abebe shop jk",
+              overflow: TextOverflow.ellipsis,
+              style: TextStyle(
+                fontWeight: FontWeight.bold,
+              ),
+            ),
+          ),
+        ],
       ),
     );
   }

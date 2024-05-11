@@ -5,10 +5,11 @@ import 'package:flutter/src/widgets/framework.dart';
 import '../../services/theme/text_theme.dart';
 import '../../utils/constants/colors.dart';
 import '../../utils/helper_function.dart';
+import '../../widgets/company_profile_widget.dart';
 import '../../widgets/user_profile_widget.dart';
 
-class User extends StatelessWidget {
-  const User({Key? key}) : super(key: key);
+class CompanyDesktop extends StatelessWidget {
+  const CompanyDesktop({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -22,7 +23,7 @@ class User extends StatelessWidget {
             IconButton(onPressed: (){}, icon: Icon(Icons.more_vert))
           ],
            title: Text(
-          'Users ',
+          'Company ',
           style: dark
               ? STextTheme.darkTextTheme.headlineSmall
               : STextTheme.lightTextTheme.headlineSmall,
@@ -33,7 +34,7 @@ class User extends StatelessWidget {
         ),
       body: SingleChildScrollView(child: Column(
         children: [
-          UserWidget()
+          CompanyWidget()
         ],
       )),
     );

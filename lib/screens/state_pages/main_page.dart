@@ -3,8 +3,11 @@ import 'package:ssen_admin/utils/constants/colors.dart';
 import 'package:ssen_admin/utils/constants/global_varable.dart';
 import 'package:ssen_admin/utils/helper_function.dart';
 
+import '../component/company.dart';
 import '../component/dashboard.dart';
 import '../component/home.dart';
+import '../component/request.dart';
+import '../component/user.dart';
 
 class MainPage extends StatefulWidget {
   const MainPage({super.key});
@@ -20,9 +23,9 @@ class _MainPageState extends State<MainPage> {
   final screens = [
      
     Home(),
-    Center(child: Text("3")),
-    Center(child: Text("4")),
-    Center(child: Text("5")),
+    User(),
+    Company(),
+    RequestPage(),
   ];
 
   @override

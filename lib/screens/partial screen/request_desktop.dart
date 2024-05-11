@@ -8,8 +8,8 @@ import '../../utils/constants/colors.dart';
 import '../../utils/helper_function.dart';
 import '../../widgets/request_widget.dart';
 
-class RequestPage extends StatelessWidget {
-  const RequestPage({super.key});
+class RequestPageDesktop extends StatelessWidget {
+  const RequestPageDesktop({super.key});
   @override
   Widget build(BuildContext context) {
     final dark = SHelperFunction.isDarkMode(context);

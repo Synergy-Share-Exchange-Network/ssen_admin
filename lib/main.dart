@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:ssen_admin/intermediate.dart';
+import 'package:ssen_admin/responsive.dart';
+import 'package:ssen_admin/screens/company_detail.dart';
 import 'package:ssen_admin/screens/state_pages/main_page.dart';
+import 'package:ssen_admin/screens/user_detail.dart';
 import 'package:ssen_admin/services/app_routes.dart';
 import 'package:ssen_admin/services/theme/app_theme.dart';
 
@@ -38,8 +41,8 @@ class MyApp extends StatelessWidget {
       // home: Companyprofile(),
       // home: Purchase(),
       // home: const TermAndCondition(),
-      home: MainPage(),
-
+      // home: Responsive(),
+home: CompanyDetail(),
       // home: DesktopResponsive(),
       // home: Intermediate(),
       // home: SearchScreen(),

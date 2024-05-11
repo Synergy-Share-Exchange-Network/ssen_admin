@@ -7,8 +7,8 @@ import '../../utils/constants/colors.dart';
 import '../../utils/helper_function.dart';
 import '../../widgets/user_profile_widget.dart';
 
-class User extends StatelessWidget {
-  const User({Key? key}) : super(key: key);
+class UserDesktop extends StatelessWidget {
+  const UserDesktop({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
