@@ -1,4 +1,6 @@
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:ssen_admin/firebase_options.dart';
 import 'package:ssen_admin/intermediate.dart';
 import 'package:ssen_admin/responsive.dart';
 import 'package:ssen_admin/screens/company_detail.dart';
@@ -7,7 +9,11 @@ import 'package:ssen_admin/screens/user_detail.dart';
 import 'package:ssen_admin/services/app_routes.dart';
 import 'package:ssen_admin/services/theme/app_theme.dart';
 
-void main() {
+Future<void> main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp(
+    options: DefaultFirebaseOptions.currentPlatform,
+  );
   runApp(MyApp(
     appRouter: AppRouter(),
   ));
@@ -15,6 +21,7 @@ void main() {
 
 class MyApp extends StatelessWidget {
   const MyApp({Key? key, required this.appRouter}) : super(key: key);
+
   final AppRouter appRouter;
 
   // This widget is the root of your application.
@@ -42,9 +49,9 @@ class MyApp extends StatelessWidget {
       // home: Purchase(),
       // home: const TermAndCondition(),
       // home: Responsive(),
-home: CompanyDetail(),
+// home: CompanyDetail(),
       // home: DesktopResponsive(),
-      // home: Intermediate(),
+      home: Intermediate(),
       // home: SearchScreen(),
 
       // home: PostShareSecondary(),

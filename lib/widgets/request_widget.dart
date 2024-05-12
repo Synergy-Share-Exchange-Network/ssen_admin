@@ -5,7 +5,6 @@ import 'package:flutter/src/widgets/framework.dart';
 import 'package:ssen_admin/screens/component/request.dart';
 import 'package:ssen_admin/screens/request_detail.dart';
 
-
 import '../../services/theme/text_theme.dart';
 
 import '../utils/constants/colors.dart';
@@ -19,20 +18,20 @@ class RequestWidget extends StatelessWidget {
     bool dark = SHelperFunction.isDarkMode(context);
     return GestureDetector(
       onTap: () {
-       Navigator.push(
+        Navigator.push(
           context,
           MaterialPageRoute(
-              builder: (context) =>
-               Requestdetail(
-        requestStatus: 'Pending',
-        requestDate: 'April 25, 2024',
-        requestDescription:
-            'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed efficitur, ante nec aliquam consequat, ligula est pellentesque libero, id laoreet elit justo id purus.',
-        requesterName: 'John Doe',
-        requesterEmail: 'john.doe@example.com',
-        requesterPhoneNumber: '+1234567890',
-        requesterAddress: '123 Main St, City, Country',
-      ),), // Replace ShareholderDetailPage() with your actual detail page
+            builder: (context) => Requestdetail(
+              requestStatus: 'Pending',
+              requestDate: 'April 25, 2024',
+              requestDescription:
+                  'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed efficitur, ante nec aliquam consequat, ligula est pellentesque libero, id laoreet elit justo id purus.',
+              requesterName: 'John Doe',
+              requesterEmail: 'john.doe@example.com',
+              requesterPhoneNumber: '+1234567890',
+              requesterAddress: '123 Main St, City, Country',
+            ),
+          ), // Replace ShareholderDetailPage() with your actual detail page
         );
       },
       child: Container(
