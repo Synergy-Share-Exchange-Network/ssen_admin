@@ -4,7 +4,6 @@ import 'package:flutter/src/widgets/framework.dart';
 
 import '../services/theme/text_theme.dart';
 import '../utils/constants.dart';
-import '../utils/constants/colors.dart';
 import '../utils/constants/navbar.dart';
 import '../utils/helper_function.dart';
 
@@ -431,7 +430,7 @@ class UserDetail extends StatelessWidget {
                                   ? STextTheme.darkTextTheme.bodySmall
                                   : STextTheme.lightTextTheme.bodySmall,
                             ),
-                             const SizedBox(height: 18),
+                            const SizedBox(height: 18),
                             Row(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
@@ -450,7 +449,7 @@ class UserDetail extends StatelessWidget {
                                         // Handle 'Yes' button press
                                       },
                                       style: ElevatedButton.styleFrom(
-                                        primary: Colors
+                                        backgroundColor: Colors
                                             .green, // Green color for 'Yes' button
                                       ),
                                       child: Text('Enable'),
@@ -462,7 +461,7 @@ class UserDetail extends StatelessWidget {
                                         // Handle 'No' button press
                                       },
                                       style: ElevatedButton.styleFrom(
-                                        primary: Colors
+                                        backgroundColor: Colors
                                             .red, // Red color for 'No' button
                                       ),
                                       child: Text('Disable'),
@@ -471,7 +470,7 @@ class UserDetail extends StatelessWidget {
                                 ),
                               ],
                             ),
-                             const SizedBox(height: 18),
+                            const SizedBox(height: 18),
                             Row(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
@@ -485,13 +484,13 @@ class UserDetail extends StatelessWidget {
                                 Row(
                                   mainAxisAlignment: MainAxisAlignment.center,
                                   children: [
-                                     // Add space between buttons
+                                    // Add space between buttons
                                     ElevatedButton(
                                       onPressed: () {
                                         // Handle 'No' button press
                                       },
                                       style: ElevatedButton.styleFrom(
-                                        primary: Colors
+                                        backgroundColor: Colors
                                             .red, // Red color for 'No' button
                                       ),
                                       child: Text('Delete'),
@@ -500,7 +499,7 @@ class UserDetail extends StatelessWidget {
                                 ),
                               ],
                             ),
-                             const SizedBox(height: 18),
+                            const SizedBox(height: 18),
                             Row(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
@@ -519,7 +518,7 @@ class UserDetail extends StatelessWidget {
                                         // Handle 'Yes' button press
                                       },
                                       style: ElevatedButton.styleFrom(
-                                        primary: Colors
+                                        backgroundColor: Colors
                                             .green, // Green color for 'Yes' button
                                       ),
                                       child: Text('Enable'),
@@ -531,7 +530,7 @@ class UserDetail extends StatelessWidget {
                                         // Handle 'No' button press
                                       },
                                       style: ElevatedButton.styleFrom(
-                                        primary: Colors
+                                        backgroundColor: Colors
                                             .red, // Red color for 'No' button
                                       ),
                                       child: Text('Disable'),

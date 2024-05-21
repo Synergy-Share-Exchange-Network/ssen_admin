@@ -1,5 +1,6 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:ssen_admin/app.dart';
 import 'package:ssen_admin/firebase_options.dart';
 import 'package:ssen_admin/intermediate.dart';
 import 'package:ssen_admin/responsive.dart';
@@ -51,7 +52,8 @@ class MyApp extends StatelessWidget {
       // home: Responsive(),
 // home: CompanyDetail(),
       // home: DesktopResponsive(),
-      home: Intermediate(),
+      // home: Intermediate(),
+      home: Pdf(),
       // home: SearchScreen(),
 
       // home: PostShareSecondary(),

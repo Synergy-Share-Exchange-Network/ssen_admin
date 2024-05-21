@@ -7,7 +7,6 @@ import 'package:flutter/src/widgets/framework.dart';
 import '../../services/theme/text_theme.dart';
 
 import '../screens/company_detail.dart';
-import '../screens/user_detail.dart';
 import '../utils/constants/colors.dart';
 import '../utils/helper_function.dart';
 

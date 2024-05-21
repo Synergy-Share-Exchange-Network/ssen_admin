@@ -4,9 +4,8 @@ class SElevatedButtonTheme {
   SElevatedButtonTheme._();
   static final lightElevatedButtonTheme = ElevatedButtonThemeData(
     style: ElevatedButton.styleFrom(
-      elevation: 0,
-      primary: Colors.blue, // Background color for enabled state
-      onPrimary: Colors.white, // Foreground color for enabled state
+      foregroundColor: Colors.white, elevation: 0,
+      backgroundColor: Colors.blue, // Foreground color for enabled state
       textStyle: const TextStyle(
         fontSize: 16,
         color: Colors.white,
@@ -27,9 +26,8 @@ class SElevatedButtonTheme {
 
   static final darkElevatedButtonTheme = ElevatedButtonThemeData(
     style: ElevatedButton.styleFrom(
-      elevation: 0,
-      primary: Colors.blue, // Background color for enabled state
-      onPrimary: Colors.white, // Foreground color for enabled state
+      foregroundColor: Colors.white, elevation: 0,
+      backgroundColor: Colors.blue, // Foreground color for enabled state
       textStyle: const TextStyle(
         fontSize: 16,
         color: Colors.white,

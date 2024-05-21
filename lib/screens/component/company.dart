@@ -6,7 +6,6 @@ import '../../services/theme/text_theme.dart';
 import '../../utils/constants/colors.dart';
 import '../../utils/helper_function.dart';
 import '../../widgets/company_profile_widget.dart';
-import '../../widgets/user_profile_widget.dart';
 
 class Company extends StatelessWidget {
   const Company({Key? key}) : super(key: key);

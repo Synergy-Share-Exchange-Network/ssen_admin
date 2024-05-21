@@ -4,8 +4,8 @@ class SOutlineButton {
   SOutlineButton._();
   static final lightOutlinedButtonTheme = OutlinedButtonThemeData(
     style: OutlinedButton.styleFrom(
-      elevation: 0,
-      primary: Colors.black, // Foreground color for enabled state
+      foregroundColor: Colors.black,
+      elevation: 0, // Foreground color for enabled state
       side: const BorderSide(color: Color(0xFFd9d9d9)),
       textStyle: const TextStyle(
         fontSize: 16,
@@ -21,8 +21,8 @@ class SOutlineButton {
 
   static final darkOutlinedButtonTheme = OutlinedButtonThemeData(
     style: OutlinedButton.styleFrom(
-      elevation: 0,
-      primary: Colors.white, // Foreground color for enabled state
+      foregroundColor: Colors.white,
+      elevation: 0, // Foreground color for enabled state
       side: const BorderSide(color: Color(0xFFd9d9d9)),
       textStyle: const TextStyle(
         fontSize: 16,

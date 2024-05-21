@@ -1,8 +1,8 @@
 import 'package:animate_do/animate_do.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
-
-
+import 'package:intl/intl.dart';
 
 import '../../utils/helper_function.dart';
 
@@ -15,71 +15,198 @@ class LineChartgraph extends StatefulWidget {
 
 class _LineChartgraphState extends State<LineChartgraph> {
   // crate list of spots for the graph by monthly, yearly of Google Stocks
-  List<FlSpot> _daylySpots = [
-    FlSpot(0, 20.0),
-    FlSpot(1, 20.0),
-    FlSpot(2, 30.0),
-    FlSpot(3, 10.0),
-    FlSpot(4, 40.0),
-    FlSpot(5, 60.0),
-    FlSpot(6, 40.0),
-    FlSpot(7, 80.0),
-    FlSpot(8, 60.0),
-    FlSpot(9, 70.0),
-    FlSpot(10, 50.0),
-    FlSpot(11, 150.0),
-    FlSpot(12, 70.0),
-    FlSpot(13, 80.0),
-    FlSpot(14, 60.0),
-    FlSpot(15, 70.0),
-    FlSpot(16, 60.0),
-    FlSpot(17, 80.0),
-    FlSpot(18, 110.0),
-    FlSpot(19, 130.0),
-    FlSpot(20, 100.0),
-    FlSpot(21, 130.0),
-    FlSpot(22, 160.0),
-    FlSpot(23, 190.0),
-    FlSpot(24, 150.0),
-    FlSpot(25, 170.0),
-    FlSpot(26, 180.0),
-    FlSpot(27, 140.0),
-    FlSpot(28, 150.0),
-    FlSpot(29, 150.0),
-    FlSpot(30, 130.0)
-  ];
-
-  List<FlSpot> _monthlySpots = [
-    FlSpot(0, 110.0),
-    FlSpot(1, 110.0),
-    FlSpot(2, 130.0),
-    FlSpot(3, 100.0),
-    FlSpot(4, 130.0),
-    FlSpot(5, 160.0),
-    FlSpot(6, 190.0),
-    FlSpot(7, 150.0),
-    FlSpot(8, 170.0),
-    FlSpot(9, 180.0),
-    FlSpot(10, 140.0),
-    FlSpot(11, 150.0),
-  ];
-
+  // late List<FlSpot> _daylySpots;
+  late List<String> _xLabelsDay;
+  late List<String> _xLabelsMonth;
+  late List<String> _xLabelsYear;
+  late List<List<int>> _monthIndexes;
+  final FirebaseFirestore _firestore = FirebaseFirestore.instance;
+  List<FlSpot> _dailySpots = [];
+  List<FlSpot> _monthlySpots = [];
+  List<FlSpot> _yearlySpots = [];
   int _currentIndex = 0;
+  bool _isLoading = true;
+  int limit = 10;
 
   @override
+  void initState() {
+    super.initState();
+    fetchData();
+    // _daylySpots = _generateRandomData();
+    _xLabelsDay = _generateXLabelsDay();
+    _xLabelsMonth = _generateXLabelsMonth();
+    _xLabelsYear = _generateXLabelsYear(5);
+  }
+
+  List<FlSpot> calculateMonthValues(
+      List<dynamic> selesData, List<List<int>> monthIndexes) {
+    List<FlSpot> monthlySpots = [];
+
+    for (int i = 0; i < monthIndexes.length; i++) {
+      List<int> indexes = monthIndexes[i];
+      double totalSales = 0;
+
+      for (int j = indexes[0]; j <= indexes[1]; j++) {
+        totalSales += selesData[j];
+      }
+
+      double averageSales = totalSales / (indexes[1] - indexes[0] + 1);
+      monthlySpots.add(FlSpot(i.toDouble(), totalSales));
+    }
+
+    return monthlySpots;
+  }
+
+  List<List<int>> calculateMonthIndexes(List<String> dates) {
+    List<List<int>> monthIndexes = [];
+    int currentYear = -1;
+    int currentMonth = -1;
+    int monthStartIndex = 0;
+
+    for (int i = 0; i < dates.length; i++) {
+      DateTime date = DateTime.parse(dates[i]);
+      int year = date.year;
+      int month = date.month;
+
+      if (currentYear != year || currentMonth != month) {
+        if (currentYear != -1 && currentMonth != -1) {
+          // Mark the end index of the previous month
+          monthIndexes.add([monthStartIndex, i - 1]);
+        }
+        // Mark the start index of the current month
+        monthStartIndex = i;
+      }
+
+      currentYear = year;
+      currentMonth = month;
+    }
+
+    // Mark the end index of the last month
+    monthIndexes.add([monthStartIndex, dates.length - 1]);
+
+    return monthIndexes;
+  }
+
+  Future<void> fetchData() async {
+    try {
+      DocumentSnapshot primaryDoc = await _firestore
+          .collection('ML_data')
+          .doc('companies')
+          .collection('c2')
+          .doc('primary')
+          .get();
+
+      if (primaryDoc.exists) {
+        Map<String, dynamic>? data = primaryDoc.data() as Map<String, dynamic>?;
+
+        if (data != null) {
+          List<dynamic> dates = data['dates'] ?? [];
+          List<dynamic> seles = data['seles'] ?? [];
+          _monthIndexes = calculateMonthIndexes(dates.cast<String>());
+          print(_monthIndexes);
+          List<FlSpot> monthValues = calculateMonthValues(seles, _monthIndexes);
+          print(monthValues);
+
+          if (dates.length == seles.length) {
+            List<FlSpot> spotsDay = [];
+            List<FlSpot> spotsMonth = [];
+
+            int ini = 0;
+            for (int i = dates.length - limit; i < dates.length; i++, ini++) {
+              spotsDay.add(FlSpot(ini.toDouble(), seles[i].toDouble()));
+            }
+            // for (int i = dates.length; i < dates.length; i++, ini++) {
+            //   spotsMonth.add(FlSpot(ini.toDouble(), seles[i].toDouble()));
+            // }
+            setState(() {
+              _dailySpots = spotsDay;
+              _monthlySpots = monthValues;
+
+              _isLoading = false;
+              print(_dailySpots);
+            });
+          } else {
+            print('Mismatch in length between dates and seles');
+            setState(() {
+              _isLoading = false;
+            });
+          }
+        } else {
+          print('No data found in primary document.');
+          setState(() {
+            _isLoading = false;
+          });
+        }
+      } else {
+        print('Primary document does not exist.');
+        setState(() {
+          _isLoading = false;
+        });
+      }
+    } catch (e) {
+      print('Error fetching data: $e');
+      setState(() {
+        _isLoading = false;
+      });
+    }
+  }
+
+  List<String> _generateXLabelsDay() {
+    List<String> labels = [];
+    DateTime currentDate = DateTime.now();
+    for (int i = 0; i < limit; i++) {
+      DateTime date = currentDate.subtract(Duration(days: i));
+      String formattedDate = DateFormat('MMM-dd').format(date);
+      labels.add(formattedDate);
+    }
+
+    print(labels);
+    return labels.reversed.toList();
+  }
+
+  List<String> _generateXLabelsMonth() {
+    List<String> labels = [];
+    DateTime currentDate = DateTime.now();
+
+    for (int i = 0; i < 6; i++) {
+      DateTime date = currentDate.subtract(
+          Duration(days: i * 30)); // Subtracting months instead of days
+      String formattedDate =
+          DateFormat('MMM-yy').format(date); // Format as month-year
+      labels.add(formattedDate);
+    }
+    print(labels);
+    return labels.reversed
+        .toList(); // Reversing the list to display from oldest to newest
+  }
+
+  List<String> _generateXLabelsYear(int limit) {
+    List<String> labels = [];
+    DateTime currentDate = DateTime.now();
+
+    for (int i = 0; i < limit; i++) {
+      DateTime date = DateTime(currentDate.year - i, 1,
+          1); // Create a date for January 1st of the respective year
+      String formattedDate = DateFormat('yyyy').format(date); // Format as year
+      labels.add(formattedDate);
+    }
+    print(labels);
+    return labels.reversed
+        .toList(); // Reversing the list to display from oldest to newest
+  }
+
   Widget build(BuildContext context) {
     final dark = SHelperFunction.isDarkMode(context);
     return Container(
       child:
           Column(mainAxisAlignment: MainAxisAlignment.end, children: <Widget>[
-      
-        SizedBox(
+        const SizedBox(
           height: 10,
         ),
         FadeInUp(
-          duration: Duration(milliseconds: 1000),
+          duration: const Duration(milliseconds: 1000),
           from: 30,
-          child: Text(
+          child: const Text(
             '+1.5%',
             style: TextStyle(
               fontSize: 18,
@@ -88,22 +215,22 @@ class _LineChartgraphState extends State<LineChartgraph> {
             ),
           ),
         ),
-        SizedBox(height: 50),
+        const SizedBox(height: 50),
         FadeInUp(
-          duration: Duration(milliseconds: 1000),
+          duration: const Duration(milliseconds: 1000),
           from: 60,
           child: Container(
               height: MediaQuery.of(context).size.height * 0.3,
               child: LineChart(
                 mainData(),
                 swapAnimationCurve: Curves.easeInOutCubic,
-                swapAnimationDuration: Duration(milliseconds: 1000),
+                swapAnimationDuration: const Duration(milliseconds: 1000),
               )),
         ),
         AnimatedContainer(
-            duration: Duration(milliseconds: 500),
+            duration: const Duration(milliseconds: 500),
             height: MediaQuery.of(context).size.height * 0.3,
-            padding: EdgeInsets.all(20),
+            padding: const EdgeInsets.all(20),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
@@ -114,13 +241,13 @@ class _LineChartgraphState extends State<LineChartgraph> {
                     });
                   },
                   child: Container(
-                    padding:
-                        EdgeInsets.symmetric(horizontal: 20.0, vertical: 15.0),
+                    padding: const EdgeInsets.symmetric(
+                        horizontal: 20.0, vertical: 15.0),
                     decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(10),
                       color: _currentIndex == 0
-                          ? Color(0xff161b22)
-                          : Color(0xff161b22).withOpacity(0.0),
+                          ? const Color(0xff161b22)
+                          : const Color(0xff161b22).withOpacity(0.0),
                     ),
                     child: Text(
                       "D",
@@ -139,14 +266,14 @@ class _LineChartgraphState extends State<LineChartgraph> {
                     });
                   },
                   child: AnimatedContainer(
-                    duration: Duration(milliseconds: 500),
-                    padding:
-                        EdgeInsets.symmetric(horizontal: 20.0, vertical: 15.0),
+                    duration: const Duration(milliseconds: 500),
+                    padding: const EdgeInsets.symmetric(
+                        horizontal: 20.0, vertical: 15.0),
                     decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(10),
                       color: _currentIndex == 1
-                          ? Color(0xff161b22)
-                          : Color(0xff161b22).withOpacity(0.0),
+                          ? const Color(0xff161b22)
+                          : const Color(0xff161b22).withOpacity(0.0),
                     ),
                     child: Text(
                       "M",
@@ -165,14 +292,14 @@ class _LineChartgraphState extends State<LineChartgraph> {
                     });
                   },
                   child: AnimatedContainer(
-                    duration: Duration(milliseconds: 500),
-                    padding:
-                        EdgeInsets.symmetric(horizontal: 20.0, vertical: 15.0),
+                    duration: const Duration(milliseconds: 500),
+                    padding: const EdgeInsets.symmetric(
+                        horizontal: 20.0, vertical: 15.0),
                     decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(10),
                       color: _currentIndex == 2
-                          ? Color(0xff161b22)
-                          : Color(0xff161b22).withOpacity(0.0),
+                          ? const Color(0xff161b22)
+                          : const Color(0xff161b22).withOpacity(0.0),
                     ),
                     child: Text(
                       "Y",
@@ -197,12 +324,53 @@ class _LineChartgraphState extends State<LineChartgraph> {
   ];
 
   LineChartData mainData() {
+    List<FlSpot> spots = _currentIndex == 0
+        ? _dailySpots
+        : _currentIndex == 1
+            ? _monthlySpots
+            : _currentIndex == 2
+                ? _yearlySpots
+                : _dailySpots;
+    double maxY = 0;
+    double minX;
+    double maxX;
+    if (_currentIndex == 0) {
+      int startIndex = (_dailySpots.length > 10) ? _dailySpots.length - 10 : 0;
+      int endIndex = _dailySpots.length - 1;
+      minX = 0;
+      for (int i = startIndex; i <= endIndex; i++) {
+        if (_dailySpots[i].y > maxY) {
+          maxY = _dailySpots[i].y;
+        }
+      }
+      maxX = _dailySpots.length - 1.toDouble();
+    } else if (_currentIndex == 1) {
+      int startIndex =
+          (_monthlySpots.length > 1) ? _monthlySpots.length - 5 : 0;
+      int endIndex = _monthlySpots.length - 1;
+      for (int i = startIndex; i <= endIndex; i++) {
+        if (_monthlySpots[i].y > maxY) {
+          maxY = _dailySpots[i].y;
+        }
+      }
+      minX = 0;
+      maxX = _xLabelsMonth.length - 1.toDouble();
+    } else if (_currentIndex == 2) {
+      minX = 0;
+      maxX = _xLabelsYear.length - 1.toDouble();
+    } else {
+      minX = 0;
+      maxX = spots.length.toDouble();
+    }
     return LineChartData(
       borderData: FlBorderData(
-        show: false,
+        show: true,
       ),
       gridData: FlGridData(
-          show: false, horizontalInterval: 1.6, drawVerticalLine: false),
+          show: true,
+          drawHorizontalLine: true,
+          horizontalInterval: 10,
+          drawVerticalLine: false),
       titlesData: FlTitlesData(
         show: true,
         rightTitles: SideTitles(showTitles: true),
@@ -218,103 +386,29 @@ class _LineChartgraphState extends State<LineChartgraph> {
           getTitles: (value) {
             if (_currentIndex == 0) {
               // Assuming daily data
-              switch (value.toInt()) {
-                case 1:
-                  return '0';
-                case 2:
-                  return '1';
-
-                case 3:
-                  return '3';
-                case 4:
-                  return '4';
-                case 5:
-                  return '5';
-                case 6:
-                  return '6';
-                case 7:
-                  return '7';
-                case 8:
-                  return '8';
-                case 9:
-                  return '9';
-                case 10:
-                  return '10';
-                case 11:
-                  return '11';
-                case 12:
-                  return '12';
-                case 13:
-                  return '13';
-                case 14:
-                  return '14';
-                case 15:
-                  return '15';
-                case 16:
-                  return '16';
-                case 17:
-                  return '17';
-                case 18:
-                  return '18';
-                case 19:
-                  return '19';
-                case 20:
-                  return '20  ';
-                case 21:
-                  return '21';
-                case 22:
-                  return '22';
-                case 23:
-                  return '23';
-                case 24:
-                  return '24';
-                case 25:
-                  return '25';
-                case 26:
-                  return '26';
-
-                case 27:
-                  return '27';
-                case 28:
-                  return '28';
-                case 29:
-                  return '29  ';
-                case 30:
-                  return '30';
-
-                // Add more cases as needed
+              int index = value.toInt();
+              // switch (value.toInt()) {
+              //! display dates in mmm-dd form
+              if (index >= 0 && index < _xLabelsDay.length) {
+                return _xLabelsDay[index];
               }
+              // Add more cases as needed
             } else if (_currentIndex == 1) {
+              int index = value.toInt();
               // Assuming monthly data
-              switch (value.toInt()) {
-                case 1:
-                  return 'JAN';
-                case 2:
-                  return 'FEB';
-                case 3:
-                  return 'MAR';
-                case 4:
-                  return 'APR';
-                case 5:
-                  return 'MAY';
-                case 6:
-                  return 'JUN';
-                case 7:
-                  return 'JUL';
-                case 8:
-                  return 'AUG';
-                case 9:
-                  return 'SEP';
-                case 10:
-                  return 'OCT';
-                case 11:
-                  return 'NOV';
-                case 12:
-                  return 'DEC';
+              // switch (value.toInt()) {
+              //   //!
+              // }
+              if (index >= 0 && index < _xLabelsMonth.length) {
+                return _xLabelsMonth[index];
               }
             } else if (_currentIndex == 2) {
               // Assuming yearly data
-              return '${(value + 10).toInt()}';
+              int index = value.toInt();
+              // return '${(value + 10).toInt()}';
+              if (index >= 0 && index < _xLabelsYear.length) {
+                return _xLabelsYear[index];
+              }
             }
             return '';
           },
@@ -341,16 +435,10 @@ class _LineChartgraphState extends State<LineChartgraph> {
           },
         ),
       ),
-      minX: 0,
-      maxX: _currentIndex == 0
-          ? _daylySpots.length - 1.toDouble()
-          : _currentIndex == 1
-              ? _monthlySpots.length - 1.toDouble()
-              : _currentIndex == 2
-                  ? _daylySpots.length - 20.toDouble()
-                  : _daylySpots.length.toDouble(),
+      minX: minX,
+      maxX: maxX,
       minY: 0,
-      maxY: 200,
+      maxY: maxY,
       lineTouchData: LineTouchData(
           getTouchedSpotIndicator:
               (LineChartBarData barData, List<int> spotIndexes) {
@@ -380,7 +468,7 @@ class _LineChartgraphState extends State<LineChartgraph> {
           enabled: true,
           touchTooltipData: LineTouchTooltipData(
             tooltipPadding: const EdgeInsets.all(8),
-            tooltipBgColor: Color(0xff2e3747).withOpacity(0.8),
+            tooltipBgColor: const Color(0xff2e3747).withOpacity(0.8),
             getTooltipItems: (touchedSpots) {
               return touchedSpots.map((touchedSpot) {
                 return LineTooltipItem(
@@ -394,10 +482,12 @@ class _LineChartgraphState extends State<LineChartgraph> {
       lineBarsData: [
         LineChartBarData(
           spots: _currentIndex == 0
-              ? _daylySpots
+              ? _dailySpots
               : _currentIndex == 1
                   ? _monthlySpots
-                  : _daylySpots,
+                  : _currentIndex == 2
+                      ? _yearlySpots
+                      : _dailySpots,
           isCurved: true,
           colors: gradientColors,
           barWidth: 2,
@@ -406,8 +496,8 @@ class _LineChartgraphState extends State<LineChartgraph> {
           ),
           belowBarData: BarAreaData(
               show: true,
-              gradientFrom: Offset(0, 0),
-              gradientTo: Offset(0, 1),
+              gradientFrom: const Offset(0, 0),
+              gradientTo: const Offset(0, 1),
               colors: [
                 Colors.blue.withOpacity(0.1),
                 Colors.blue.withOpacity(0),
