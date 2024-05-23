@@ -1,12 +1,21 @@
 import 'package:flutter/material.dart';
+import 'package:ssen_admin/screens/about_us.dart';
 import 'package:ssen_admin/screens/partial%20screen/company_desktop.dart';
 import 'package:ssen_admin/screens/partial%20screen/home_desktop.dart';
 import 'package:ssen_admin/screens/partial%20screen/request_desktop.dart';
 import 'package:ssen_admin/screens/partial%20screen/user_desktop.dart';
+import 'package:ssen_admin/screens/profile.dart';
+import 'package:ssen_admin/screens/setting.dart';
+import 'package:ssen_admin/screens/term_condition.dart';
 import 'package:ssen_admin/utils/constants.dart';
 import 'package:ssen_admin/utils/constants/colors.dart';
 import 'package:ssen_admin/utils/constants/image_Strings.dart';
 import 'package:ssen_admin/utils/helper_function.dart';
+
+import 'component/company.dart';
+import 'component/home.dart';
+import 'component/request.dart';
+import 'component/user.dart';
 
 class DesktopResponsive extends StatefulWidget {
   const DesktopResponsive({super.key});
@@ -23,7 +32,6 @@ class _DesktopResponsiveState extends State<DesktopResponsive> {
   Widget build(BuildContext context) {
     return Scaffold(
       key: _scaffoldKey,
-     
       body: Row(
         children: [
           if (MediaQuery.of(context).size.width > tabletSize)
@@ -61,8 +69,8 @@ class _DesktopResponsiveState extends State<DesktopResponsive> {
                                         color: Colors.blue, width: 3),
                                     image: DecorationImage(
                                         fit: BoxFit.cover,
-                                        image: NetworkImage(
-                                            SImages.employee2))),
+                                        image:
+                                            NetworkImage(SImages.employee2))),
                               ),
                             ),
                           ),
@@ -204,46 +212,46 @@ class _DesktopResponsiveState extends State<DesktopResponsive> {
                                     });
                                   },
                                 ),
-                          index != 6
-                              ? DrawerItem(
-                                  icon: Icons.location_on,
-                                  title: "My Address",
-                                  callback: () {
-                                    setState(() {
-                                      index = 6;
-                                    });
-                                  },
-                                )
-                              : SelectedDrawerItem(
-                                  icon: Icons.location_on,
-                                  title: "My Address",
-                                  callback: () {
-                                    setState(() {
-                                      index = 6;
-                                    });
-                                  },
-                                ),
+                          // index != 6
+                          //     ? DrawerItem(
+                          //         icon: Icons.location_on,
+                          //         title: "My Address",
+                          //         callback: () {
+                          //           setState(() {
+                          //             index = 6;
+                          //           });
+                          //         },
+                          //       )
+                          //     : SelectedDrawerItem(
+                          //         icon: Icons.location_on,
+                          //         title: "My Address",
+                          //         callback: () {
+                          //           setState(() {
+                          //             index = 6;
+                          //           });
+                          //         },
+                          //       ),
                           index != 7
                               ? DrawerItem(
                                   icon: Icons.info,
                                   title: "About Us",
                                   callback: () {
-                                    // setState(() {
-                                    //   index = 7;
-                                    // });
-                                    // Navigator.pushNamed(
-                                    //     context, AboutUs.route);
+                                    setState(() {
+                                      index = 7;
+                                    });
+                                    Navigator.pushNamed(
+                                        context, AboutUsPage.route);
                                   },
                                 )
                               : SelectedDrawerItem(
                                   icon: Icons.info,
                                   title: "About Us",
                                   callback: () {
-                                    // setState(() {
-                                    //   index = 7;
-                                    // });
-                                    // Navigator.pushNamed(
-                                    //     context, AboutUs.route);
+                                    setState(() {
+                                      index = 7;
+                                    });
+                                    Navigator.pushNamed(
+                                        context, AboutUsPage.route);
                                   },
                                 ),
                           index != 8
@@ -326,16 +334,16 @@ class _DesktopResponsiveState extends State<DesktopResponsive> {
                                   icon: Icons.settings,
                                   title: "Settings",
                                   callback: () {
-                                    // Navigator.pushNamed(
-                                    //     context, Setting.route);
+                                    Navigator.pushNamed(
+                                        context, SettingsPage.route);
                                   },
                                 )
                               : SelectedDrawerItem(
                                   icon: Icons.settings,
                                   title: "Settings",
                                   callback: () {
-                                    // Navigator.pushNamed(
-                                    //     context, Setting.route);
+                                    Navigator.pushNamed(
+                                        context, SettingsPage.route);
                                   },
                                 ),
                           index != 11
@@ -343,39 +351,24 @@ class _DesktopResponsiveState extends State<DesktopResponsive> {
                                   icon: Icons.format_align_center,
                                   title: "Terms and Condition",
                                   callback: () {
-                                    // setState(() {
-                                    //   index = 11;
-                                    // });
-                                    // Navigator.pushNamed(
-                                    //     context, TermAndCondition.route);
+                                    setState(() {
+                                      index = 11;
+                                    });
+                                    Navigator.pushNamed(
+                                        context, TermsAndConditionsPage.route);
                                   },
                                 )
                               : SelectedDrawerItem(
                                   icon: Icons.format_align_center,
                                   title: "Terms and Condition",
                                   callback: () {
-                                    // setState(() {
-                                    //   index = 11;
-                                    // });
-                                    // Navigator.pushNamed(
-                                    //     context, TermAndCondition.route);
+                                    setState(() {
+                                      index = 11;
+                                    });
+                                    Navigator.pushNamed(
+                                        context, TermsAndConditionsPage.route);
                                   },
                                 ),
-                          const Divider(),
-                          Container(
-                              margin: const EdgeInsets.all(15),
-                              child: const Text(
-                                "User Channals",
-                                style: TextStyle(
-                                    fontSize: 18, color: SColors.grey),
-                              )),
-                          UserChannel(),
-                          UserChannel(),
-                          UserChannel(),
-                          UserChannel(),
-                          UserChannel(),
-                          UserChannel(),
-                          UserChannel(),
                         ],
                       ),
                     ),
@@ -458,13 +451,16 @@ class _DesktopResponsiveState extends State<DesktopResponsive> {
                                   // const AdminPageState(),
                                   // Location()
 
-                                    HomeDesktop(),
-    UserDesktop(),
-    CompanyDesktop(),
-    RequestPageDesktop(),
+                                  Home(),
+                                  User(),
+                                  Company(),
+                                  RequestPage(),
+                                  ProfilePage(),
+                                  Text('1'),
 
-                                  Container(),
-                                  Container(),
+                                  Text('1'),
+                                  Text('1'),
+                                  Text('1'),
                                 ],
                               ),
                             )
@@ -484,7 +480,7 @@ class _DesktopResponsiveState extends State<DesktopResponsive> {
                                 ],
                               ),
                             ),
-                         const Expanded(
+                      const Expanded(
                         child: SizedBox(),
                       ),
                       SingleChildScrollView(
@@ -546,38 +542,6 @@ class _DesktopResponsiveState extends State<DesktopResponsive> {
                                             ],
                                           ),
                                         )
-                                      ],
-                                    ),
-                                  ),
-                                ),
-                              ),
-                            ),
-                            Container(
-                              margin: const EdgeInsets.all(8),
-                              child: Card(
-                                elevation: 2,
-                                child: Container(
-                                  width: 200,
-                                  height: 300,
-                                  child: SingleChildScrollView(
-                                    child: Column(
-                                      children: [
-                                        Container(
-                                            margin: const EdgeInsets.all(15),
-                                            child: const Text(
-                                              "Recomanded Channals",
-                                              style: TextStyle(
-                                                  fontSize: 18,
-                                                  color: Color.fromARGB(
-                                                      123, 0, 0, 0)),
-                                            )),
-                                        SubscribedChannelSmall(),
-                                        SubscribedChannelSmall(),
-                                        SubscribedChannelSmall(),
-                                        SubscribedChannelSmall(),
-                                        SubscribedChannelSmall(),
-                                        SubscribedChannelSmall(),
-                                        SubscribedChannelSmall(),
                                       ],
                                     ),
                                   ),
@@ -828,6 +792,7 @@ class SelectedDrawerItem extends StatelessWidget {
     );
   }
 }
+
 class SubscribedChannelSmall extends StatelessWidget {
   const SubscribedChannelSmall({
     Key? key,

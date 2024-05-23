@@ -21,17 +21,8 @@ class RequestWidget extends StatelessWidget {
         Navigator.push(
           context,
           MaterialPageRoute(
-            builder: (context) => Requestdetail(
-              requestStatus: 'Pending',
-              requestDate: 'April 25, 2024',
-              requestDescription:
-                  'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed efficitur, ante nec aliquam consequat, ligula est pellentesque libero, id laoreet elit justo id purus.',
-              requesterName: 'John Doe',
-              requesterEmail: 'john.doe@example.com',
-              requesterPhoneNumber: '+1234567890',
-              requesterAddress: '123 Main St, City, Country',
-            ),
-          ), // Replace ShareholderDetailPage() with your actual detail page
+              builder: (context) =>
+                  RequestDetailPage()), // Replace ShareholderDetailPage() with your actual detail page
         );
       },
       child: Container(
@@ -64,14 +55,14 @@ class RequestWidget extends StatelessWidget {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text("Dawit Nigus",
+                  Text("Habesha Beer",
                       style: dark
                           ? STextTheme.darkTextTheme.headlineSmall
                           : STextTheme.lightTextTheme.headlineSmall),
                   Row(
                     children: [
                       Icon(
-                        Icons.location_on_outlined,
+                        Icons.email,
                         // color: Colors.black,
                         size: 16,
                       ),
@@ -79,7 +70,7 @@ class RequestWidget extends StatelessWidget {
                         width: 3,
                       ),
                       Text(
-                        "Addis Ababa, Ethiopia",
+                        "Habesha@gmail.com",
                         // style: STextTheme.lightTextTheme.bodySmall
                         //     ?.copyWith(color: Colors.blue),
                         style: TextStyle(fontSize: 13),
@@ -102,20 +93,20 @@ class RequestWidget extends StatelessWidget {
                             width: 3,
                           ),
                           Text(
-                            "pending",
+                            "097855645",
                             style: dark
                                 ? STextTheme.darkTextTheme.bodySmall
                                 : STextTheme.lightTextTheme.bodySmall,
                           ),
                         ],
                       ),
-                      const SizedBox(
-                        width: 10,
+                      SizedBox(
+                        width: 20,
                       ),
                       Row(
                         children: [
                           const Icon(
-                            Icons.monetization_on_outlined,
+                            Icons.date_range,
                             color: Colors.blue,
                             size: 15,
                           ),
@@ -123,13 +114,13 @@ class RequestWidget extends StatelessWidget {
                             width: 3,
                           ),
                           Text(
-                            "1M Invested",
+                            "2023/12/30",
                             style: dark
                                 ? STextTheme.darkTextTheme.bodySmall
                                 : STextTheme.lightTextTheme.bodySmall,
                           ),
                         ],
-                      ),
+                      )
                     ],
                   ),
                 ],
