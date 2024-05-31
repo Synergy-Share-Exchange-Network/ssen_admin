@@ -2,8 +2,10 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/foundation/key.dart';
 import 'package:flutter/src/widgets/framework.dart';
+import 'package:ssen_admin/Models/company_profile_model.dart';
 import 'package:ssen_admin/screens/component/request.dart';
 import 'package:ssen_admin/screens/request_detail.dart';
+import 'package:ssen_admin/utils/utils.dart';
 
 import '../../services/theme/text_theme.dart';
 
@@ -11,7 +13,8 @@ import '../utils/constants/colors.dart';
 import '../utils/helper_function.dart';
 
 class RequestWidget extends StatelessWidget {
-  const RequestWidget({Key? key}) : super(key: key);
+  const RequestWidget({Key? key, required this.company}) : super(key: key);
+  final CompanyProfileModel company;
 
   @override
   Widget build(BuildContext context) {
@@ -21,8 +24,9 @@ class RequestWidget extends StatelessWidget {
         Navigator.push(
           context,
           MaterialPageRoute(
-              builder: (context) =>
-                  RequestDetailPage()), // Replace ShareholderDetailPage() with your actual detail page
+              builder: (context) => RequestDetailPage(
+                    company: company,
+                  )), // Replace ShareholderDetailPage() with your actual detail page
         );
       },
       child: Container(
@@ -43,9 +47,9 @@ class RequestWidget extends StatelessWidget {
             const SizedBox(
               width: 10,
             ),
-            const CircleAvatar(
+            CircleAvatar(
               radius: 40,
-              backgroundImage: AssetImage('asset/logo_image/goat.jpg'),
+              backgroundImage: NetworkImage(getThumbnail(company.logoImage[0])),
             ),
             const SizedBox(
               width: 15,
@@ -55,7 +59,7 @@ class RequestWidget extends StatelessWidget {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text("Habesha Beer",
+                  Text(company.name,
                       style: dark
                           ? STextTheme.darkTextTheme.headlineSmall
                           : STextTheme.lightTextTheme.headlineSmall),
@@ -70,7 +74,7 @@ class RequestWidget extends StatelessWidget {
                         width: 3,
                       ),
                       Text(
-                        "Habesha@gmail.com",
+                        company.email,
                         // style: STextTheme.lightTextTheme.bodySmall
                         //     ?.copyWith(color: Colors.blue),
                         style: TextStyle(fontSize: 13),
@@ -93,7 +97,7 @@ class RequestWidget extends StatelessWidget {
                             width: 3,
                           ),
                           Text(
-                            "097855645",
+                            company.phoneNumber,
                             style: dark
                                 ? STextTheme.darkTextTheme.bodySmall
                                 : STextTheme.lightTextTheme.bodySmall,
@@ -114,7 +118,7 @@ class RequestWidget extends StatelessWidget {
                             width: 3,
                           ),
                           Text(
-                            "2023/12/30",
+                            company.createdDay,
                             style: dark
                                 ? STextTheme.darkTextTheme.bodySmall
                                 : STextTheme.lightTextTheme.bodySmall,

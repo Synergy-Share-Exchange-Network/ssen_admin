@@ -1,8 +1,7 @@
-import 'package:ssen_admin/utils/date_method.dart';
-
 import '../../../Models/purchase_model.dart';
 import '../../../Models/share_model.dart';
 import '../../../Models/user_model.dart';
+import '../../../utils/date_method.dart';
 import '../model methods/firebase_purchase_methods.dart';
 
 class FirebasePurchaseServiceMethod {

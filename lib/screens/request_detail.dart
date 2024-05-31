@@ -1,7 +1,20 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:ssen_admin/Models/company_profile_model.dart';
+import 'package:ssen_admin/utils/utils.dart';
 
-class RequestDetailPage extends StatelessWidget {
+import '../services/theme/text_theme.dart';
+
+class RequestDetailPage extends StatefulWidget {
+  final CompanyProfileModel company;
+
+  const RequestDetailPage({super.key, required this.company});
+
+  @override
+  State<RequestDetailPage> createState() => _RequestDetailPageState();
+}
+
+class _RequestDetailPageState extends State<RequestDetailPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -10,109 +23,124 @@ class RequestDetailPage extends StatelessWidget {
       ),
       body: SingleChildScrollView(
         padding: const EdgeInsets.all(16.0),
-        child: Column(
-          children: [
-            Row(
+        child: Center(
+          child: Container(
+            width: 500,
+            child: Column(
               children: [
-                CircleAvatar(
-                  radius: 30,
-                  backgroundImage: AssetImage('asset/demo_image/habesha.png'),
-                ),
-                SizedBox(width: 16),
-                Expanded(
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(
-                        'Requester Name',
-                        style: TextStyle(
-                          fontSize: 20,
-                          fontWeight: FontWeight.bold,
-                        ),
+                Row(
+                  children: [
+                    CircleAvatar(
+                      radius: 30,
+                      backgroundImage:
+                          NetworkImage(getImage(widget.company.logoImage[0])),
+                    ),
+                    SizedBox(width: 16),
+                    Expanded(
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            widget.company.name,
+                            style: TextStyle(
+                              fontSize: 20,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                          Text(widget.company.email),
+                          SizedBox(
+                            width: 10,
+                          ),
+                          Text(widget.company.phoneNumber),
+                        ],
                       ),
-                      Text('requester@example.com'),
-                      SizedBox(
-                        width: 10,
+                    ),
+                  ],
+                ),
+                SizedBox(height: 16),
+                Row(
+                  children: [
+                    Text(
+                      'Date:',
+                      style: TextStyle(fontWeight: FontWeight.bold),
+                    ),
+                    Text(widget.company.createdDay),
+                  ],
+                ),
+                SizedBox(height: 16),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  children: [
+                    Container(
+                      padding: EdgeInsets.all(8),
+                      child: Text(
+                        "Trade Lisense",
+                        style: STextTheme.lightTextTheme.headlineSmall,
                       ),
-                      Text('123-456-7890'),
-                    ],
-                  ),
+                    ),
+                  ],
+                ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  children: [
+                    Padding(
+                      padding: const EdgeInsets.all(4.0),
+                      child: Image.network(
+                        getImage(widget.company.tradeLicense[0]),
+                        height: 250,
+                      ),
+                    ),
+                  ],
+                ),
+                SizedBox(height: 16),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  children: [
+                    Container(
+                      padding: EdgeInsets.all(8),
+                      child: Text(
+                        "Share Lisense",
+                        style: STextTheme.lightTextTheme.headlineSmall,
+                      ),
+                    ),
+                  ],
+                ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  children: [
+                    Padding(
+                      padding: const EdgeInsets.all(4.0),
+                      child: Image.network(
+                        getImage(widget.company.shareSalesLicense[0]),
+                        height: 250,
+                      ),
+                    ),
+                  ],
+                ),
+                SizedBox(height: 24),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  children: [
+                    ElevatedButton(
+                      onPressed: () {
+                        // Handle accept action
+                      },
+                      child: Text('Accept'),
+                    ),
+                    ElevatedButton(
+                      onPressed: () {
+                        _showDeclineDialog(context);
+                      },
+                      child: Text('Decline'),
+                      style: ElevatedButton.styleFrom(primary: Colors.red),
+                    ),
+                  ],
                 ),
               ],
             ),
-            SizedBox(height: 16),
-            Row(
-              children: [
-                Text(
-                  'Date:',
-                  style: TextStyle(fontWeight: FontWeight.bold),
-                ),
-                Text('2023-05-18'),
-              ],
-            ),
-            SizedBox(height: 16),
-            _buildLicenseSection(
-              'Trade Licenses',
-              ['asset/demo_image/habesha1.jpg'],
-            ),
-            SizedBox(height: 16),
-            _buildLicenseSection(
-              'Share Licenses',
-              [
-                'asset/demo_image/habesha1.jpg',
-                'asset/demo_image/habesha1.jpg',
-                'asset/demo_image/habesha1.jpg'
-              ],
-            ),
-            SizedBox(height: 24),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              children: [
-                ElevatedButton(
-                  onPressed: () {
-                    // Handle accept action
-                  },
-                  child: Text('Accept'),
-                ),
-                ElevatedButton(
-                  onPressed: () {
-                    _showDeclineDialog(context);
-                  },
-                  child: Text('Decline'),
-                  style: ElevatedButton.styleFrom(primary: Colors.red),
-                ),
-              ],
-            ),
-          ],
-        ),
-      ),
-    );
-  }
-
-  Widget _buildLicenseSection(String title, List<String> imagePaths) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Text(
-          title,
-          style: TextStyle(fontWeight: FontWeight.bold),
-        ),
-        SizedBox(height: 8),
-        SingleChildScrollView(
-          scrollDirection: Axis.horizontal,
-          child: Row(
-            children: imagePaths.map((path) {
-              return Padding(
-                padding: const EdgeInsets.all(4.0),
-                child: Image.asset(
-                  path,
-                  height: 250,
-                ),
-              );
-            }).toList(),
           ),
         ),
-      ],
+      ),
     );
   }
 

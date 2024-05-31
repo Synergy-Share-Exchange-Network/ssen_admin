@@ -1,4 +1,4 @@
-import 'package:ssen_admin/Models/user_model.dart';
+import '../../../Models/user_model.dart';
 
 abstract class FirebaseUserAbstract {
   Future<String> create(UserModel user);

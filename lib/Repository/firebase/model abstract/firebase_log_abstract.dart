@@ -1,7 +1,5 @@
-
-
-import 'package:ssen_admin/Models/log_model.dart';
-import 'package:ssen_admin/Models/user_model.dart';
+import '../../../Models/log_model.dart';
+import '../../../Models/user_model.dart';
 
 abstract class FirebaseLogAbstract {
   Future<String> create(

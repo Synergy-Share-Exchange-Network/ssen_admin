@@ -1,7 +1,6 @@
-
-import 'package:ssen_admin/Models/purchase_model.dart';
-import 'package:ssen_admin/Models/share_model.dart';
-import 'package:ssen_admin/Models/user_model.dart';
+import '../../../Models/purchase_model.dart';
+import '../../../Models/share_model.dart';
+import '../../../Models/user_model.dart';
 
 abstract class FirebasePurchaseAbstract {
   Future<String> create(

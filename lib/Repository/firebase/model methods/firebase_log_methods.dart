@@ -1,8 +1,8 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:ssen_admin/Models/log_model.dart';
-import 'package:ssen_admin/Models/user_model.dart';
-import 'package:ssen_admin/Repository/firebase/model%20abstract/firebase_log_abstract.dart';
-import 'package:uuid/uuid.dart';
+
+import '../../../Models/log_model.dart';
+import '../../../Models/user_model.dart';
+import '../model abstract/firebase_log_abstract.dart';
 
 class FirebaseLogMethods implements FirebaseLogAbstract {
   @override
@@ -27,21 +27,21 @@ class FirebaseLogMethods implements FirebaseLogAbstract {
       // }
 
       // final logId = generateLogId(level.name);
-      LogModel log = LogModel(
-          identification: const Uuid().v8(), // Generate a unique ID
-          date: DateTime.now(),
-          modifierID: user.identification,
-          modifierRole: user.role, //r
-          modifiedID: id,
-          modifiedEntity: entity,
-          level: level, // Adjust level
-          action: action,
-          reason: reason,
-          whatChanged: whatChanged);
-      await FirebaseFirestore.instance
-          .collection('log') // Target the "log" collection
-          .doc(log.identification)
-          .set(log.toMap());
+      // LogModel log = LogModel(
+      //     identification: const Uuid().v8(), // Generate a unique ID
+      //     date: DateTime.now(),
+      //     modifierID: user.identification,
+      //     // modifierRole: user.role, //r
+      //     modifiedID: id,
+      //     modifiedEntity: entity,
+      //     level: level, // Adjust level
+      //     action: action,
+      //     reason: reason,
+      //     whatChanged: whatChanged);
+      // await FirebaseFirestore.instance
+      //     .collection('log') // Target the "log" collection
+      //     .doc(log.identification)
+      //     .set(log.toMap());
       res = "success";
     } catch (err) {
       res = err.toString();

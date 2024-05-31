@@ -1,11 +1,14 @@
+import 'dart:typed_data';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:ssen_admin/Models/company_profile_model.dart';
-import 'package:ssen_admin/Models/log_model.dart';
-import 'package:ssen_admin/Models/share_model.dart';
-import 'package:ssen_admin/Repository/firebase/key%20words/collection_name.dart';
-import 'package:ssen_admin/Repository/firebase/model%20abstract/firebase_share_abstract.dart';
-import 'package:ssen_admin/Repository/firebase/model%20methods/firebase_log_methods.dart';
+import 'package:flutter/foundation.dart';
+import 'package:ssen_admin/Repository/firebase/firebase_storage_methods.dart';
 import 'package:uuid/uuid.dart';
+
+import '../../../Models/company_profile_model.dart';
+import '../../../Models/share_model.dart';
+import '../key words/collection_name.dart';
+import '../model abstract/firebase_share_abstract.dart';
 
 class FirebaseShareMethods implements FirebaseShareAbstract {
   @override
@@ -49,12 +52,16 @@ class FirebaseShareMethods implements FirebaseShareAbstract {
   }
 
   @override
-  Future<String> create(
-      ShareModel share, CompanyProfileModel companyProfile) async {
+  Future<String> create(ShareModel share, CompanyProfileModel companyProfile,
+      List<Uint8List>? images) async {
     String res = "";
+    List<String> shareImages = [];
+    String imageURL = '';
+
     try {
       print("in");
       //creating purchase
+
       share.identification = const Uuid().v8();
       // share.bankInformation = companyProfile.bankAccount;
       share.companyID = companyProfile.identification;
@@ -64,17 +71,56 @@ class FirebaseShareMethods implements FirebaseShareAbstract {
       share.isHidden = false;
       // share.
       // share.noOfShares=companyProfile.
+
+      if (images != null) {
+        for (var image in images) {
+          // String photoURL = await FirebaseStorageMethods().uploadImageToStorage(
+          //     "share/${share.identification}/image/${const Uuid().v4()}",
+          //     image);
+          // String thumbnailURL = await FirebaseStorageMethods()
+          //     .uploadImageToStorageThumbnails(
+          //         "share/${share.identification}/thumbnail/${const Uuid().v4()}",
+          //         image);
+          // String imageURL = "$photoURL<thumbnail>$thumbnailURL";
+          // shareImages.add(imageURL);
+          if (!kIsWeb) {
+            String photoURL = await FirebaseStorageMethods()
+                .uploadImageToStorage(
+                    "share/${share.identification}/image/${const Uuid().v4()}",
+                    image);
+            String thumbnailsPhotoURL = await FirebaseStorageMethods()
+                .uploadImageToStorageThumbnails(
+                    "share/${share.identification}/thumbnail/${const Uuid().v4()}",
+                    image);
+            imageURL = '$photoURL<thumbnail>$thumbnailsPhotoURL';
+          } else {
+            String photoURL = await FirebaseStorageMethods()
+                .uploadImageToStorageWithOutCompression(
+                    "share/${share.identification}/image/${const Uuid().v4()}",
+                    image);
+            imageURL = '$photoURL<thumbnail>$photoURL';
+          }
+          shareImages.add(imageURL);
+
+          print(shareImages);
+        }
+      }
+      share.shareImage = shareImages;
       await FirebaseFirestore.instance
           .collection(CollectionName.share)
           .doc(share.identification)
           .set(share.toMap());
 
       // updating company
-      String? shares = companyProfile.shareID;
+      // String? shares = companyProfile.shareID;
       await FirebaseFirestore.instance
           .collection(CollectionName.organization)
           .doc(companyProfile.identification)
-          .update({'shareID': shares});
+          .update({'shareID': share.identification});
+      await FirebaseFirestore.instance
+          .collection(CollectionName.organization)
+          .doc(companyProfile.identification)
+          .update({'bankAccount': share.bankInformation});
       // share.insert(0, share.identification);
       // announcements = announcements
       //     .where((announcements) => announcements.isNotEmpty)

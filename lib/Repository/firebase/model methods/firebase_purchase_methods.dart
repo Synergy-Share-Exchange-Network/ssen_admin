@@ -1,10 +1,11 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:ssen_admin/Models/purchase_model.dart';
-import 'package:ssen_admin/Models/share_model.dart';
-import 'package:ssen_admin/Models/user_model.dart';
-import 'package:ssen_admin/Repository/firebase/key%20words/collection_name.dart';
-import 'package:ssen_admin/Repository/firebase/model%20abstract/firebase_purchase_abstract.dart';
 import 'package:uuid/uuid.dart';
+
+import '../../../Models/purchase_model.dart';
+import '../../../Models/share_model.dart';
+import '../../../Models/user_model.dart';
+import '../key words/collection_name.dart';
+import '../model abstract/firebase_purchase_abstract.dart';
 // import 'package:u.dart';
 
 class FirebasePurchaseMethods implements FirebasePurchaseAbstract {

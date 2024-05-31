@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:ssen_admin/Models/ML%20models/ML_general_attribute_model.dart';
-import 'package:ssen_admin/Repository/firebase/key%20words/collection_name.dart';
+
+import '../../../../Models/ML models/ML_general_attribute_model.dart';
+import '../../key words/collection_name.dart';
 
 class FirebaseGeneralAttribute {
   Future<String> createGeneralattribute(

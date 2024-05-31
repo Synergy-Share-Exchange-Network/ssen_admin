@@ -1,4 +1,4 @@
-import 'package:ssen_admin/Models/company_profile_model.dart';
+import '../../../Models/company_profile_model.dart';
 
 abstract class FirebaseCompanyProfileAbstract {
   Future<String> create(CompanyProfileModel companyProfile);

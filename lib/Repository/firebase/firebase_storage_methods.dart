@@ -3,6 +3,7 @@ import 'dart:typed_data';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter_image_compress/flutter_image_compress.dart';
+import 'package:uuid/uuid.dart';
 
 class FirebaseStorageMethods {
   final FirebaseStorage _storage = FirebaseStorage.instance;
@@ -110,6 +111,18 @@ class FirebaseStorageMethods {
         _storage.ref().child(childName).child(_auth.currentUser!.uid);
 
     UploadTask uploadTask = ref.putData(file2);
+    TaskSnapshot snap = await uploadTask;
+
+    String downloadUrl = await snap.ref.getDownloadURL();
+
+    return downloadUrl;
+  }
+
+  Future<String> uploadImageToStorageWithOutCompression(
+      String childName, Uint8List file) async {
+    Reference ref = _storage.ref().child(childName).child(const Uuid().v1());
+
+    UploadTask uploadTask = ref.putData(file);
     TaskSnapshot snap = await uploadTask;
 
     String downloadUrl = await snap.ref.getDownloadURL();

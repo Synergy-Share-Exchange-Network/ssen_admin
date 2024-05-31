@@ -1,7 +1,11 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:ssen_admin/Models/company_profile_model.dart';
 
 class RequestHistory extends StatefulWidget {
+  final CompanyProfileModel company;
+
+  const RequestHistory({super.key, required this.company});
   @override
   _RequestHistoryState createState() => _RequestHistoryState();
 }
@@ -12,8 +16,8 @@ class _RequestHistoryState extends State<RequestHistory> {
     return Card(
       margin: EdgeInsets.all(10),
       child: ListTile(
-        title: Text("request.title"),
-        subtitle: Text("request.description"),
+        title: Text(widget.company.name),
+        subtitle: Text(widget.company.adminRejection[0]),
         trailing: Row(
           mainAxisSize: MainAxisSize.min,
           children: [

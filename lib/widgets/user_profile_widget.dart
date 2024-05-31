@@ -2,7 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/foundation/key.dart';
 import 'package:flutter/src/widgets/framework.dart';
-
+import 'package:ssen_admin/Models/user_model.dart';
 
 import '../../services/theme/text_theme.dart';
 
@@ -11,7 +11,13 @@ import '../utils/constants/colors.dart';
 import '../utils/helper_function.dart';
 
 class UserWidget extends StatelessWidget {
-  const UserWidget({Key? key}) : super(key: key);
+  UserModel user = UserModel(
+      firstName: "Dawit Nigus",
+      lastName: "lastName",
+      phoneNumber: 'phoneNumber',
+      address: 'addis ababa, ethiopia',
+      profilePicture: ['asset/logo_image/goat.jpg']);
+  UserWidget({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -43,9 +49,9 @@ class UserWidget extends StatelessWidget {
             const SizedBox(
               width: 10,
             ),
-            const CircleAvatar(
+            CircleAvatar(
               radius: 40,
-              backgroundImage: AssetImage('asset/logo_image/goat.jpg'),
+              backgroundImage: AssetImage(user.profilePicture[0]),
             ),
             const SizedBox(
               width: 15,
@@ -55,7 +61,7 @@ class UserWidget extends StatelessWidget {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text("Dawit Nigus",
+                  Text(user.firstName,
                       style: dark
                           ? STextTheme.darkTextTheme.headlineSmall
                           : STextTheme.lightTextTheme.headlineSmall),
@@ -70,7 +76,7 @@ class UserWidget extends StatelessWidget {
                         width: 3,
                       ),
                       Text(
-                        "Addis Ababa, Ethiopia",
+                        user.address[0],
                         // style: STextTheme.lightTextTheme.bodySmall
                         //     ?.copyWith(color: Colors.blue),
                         style: TextStyle(fontSize: 13),

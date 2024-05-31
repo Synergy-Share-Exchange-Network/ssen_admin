@@ -1,22 +1,127 @@
 import 'package:flutter/material.dart';
+import 'package:ssen_admin/Models/user_model.dart';
+import 'package:ssen_admin/utils/constants.dart';
 
 class UserDetail extends StatelessWidget {
+  UserModel user = UserModel(
+      profilePicture: ["asset/logo_image/goat.jpg"],
+      firstName: "Dawit Nigus",
+      lastName: "lastName",
+      phoneNumber: "+25197352738",
+      region: "oromia/west region",
+      birthDate: "22/03/1996",
+      email: "dawitnigus@gmail.com",
+      kebeleIDPhoto: ["asset/logo_image/goat.jpg", "asset/logo_image/goat.jpg"],
+      gender: "male",
+      address: ["hawassa ethiopia"],
+      isEnabled: true,
+      isBanned: false,
+      isDeleted: true);
   @override
   Widget build(BuildContext context) {
     bool isMobile = MediaQuery.of(context).size.width < 600;
 
     return Scaffold(
-      appBar: AppBar(
-        title: Text('User Details'),
-      ),
-      body: SingleChildScrollView(
-        child: Container(
-          width: MediaQuery.of(context).size.width,
-          margin: const EdgeInsets.symmetric(vertical: 80, horizontal: 20),
-          child: isMobile ? _buildMobileLayout() : _buildDesktopLayout(),
+        appBar: AppBar(
+          title: Text('User Details'),
         ),
-      ),
-    );
+        // body: SingleChildScrollView(
+        //   child: Container(
+        //     width: MediaQuery.of(context).size.width,
+        //     margin: const EdgeInsets.symmetric(vertical: 80, horizontal: 20),
+        //     child: isMobile ? _buildMobileLayout() : _buildDesktopLayout(),
+        //   ),
+        // ),
+        body: MediaQuery.of(context).size.width > phoneSize
+            ? SingleChildScrollView(
+                child: Row(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Expanded(
+                    flex: 1,
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+                        const SizedBox(height: 10),
+                        CircleAvatar(
+                          radius: 85,
+                          backgroundImage: AssetImage(user.profilePicture[0]),
+                        ),
+                        const SizedBox(height: 10),
+                        Text(
+                          user.firstName,
+                          style: TextStyle(
+                              fontWeight: FontWeight.bold, fontSize: 27),
+                        ),
+                        const SizedBox(height: 5),
+                        Text(
+                          user.address[0],
+                          style: TextStyle(fontSize: 20, color: Colors.grey),
+                        ),
+                        const SizedBox(height: 20),
+                      ],
+                    ),
+                  ),
+                  Expanded(
+                    flex: 3,
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        _buildPersonalInfo(),
+                        const SizedBox(height: 15),
+                        Divider(),
+                        const SizedBox(height: 15),
+                        _buildCredentialInfo(),
+                        const SizedBox(height: 18),
+                        Divider(),
+                        const SizedBox(height: 18),
+                        _buildOperations(),
+                        const SizedBox(height: 18),
+                        Divider(),
+                        const SizedBox(height: 18),
+                        _buildContactInfo(),
+                      ],
+                    ),
+                  ),
+                ],
+              ))
+            : SingleChildScrollView(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    const SizedBox(height: 10),
+                    CircleAvatar(
+                      radius: 85,
+                      backgroundImage: AssetImage(user.profilePicture[0]),
+                    ),
+                    const SizedBox(height: 10),
+                    Text(
+                      user.firstName,
+                      style:
+                          TextStyle(fontWeight: FontWeight.bold, fontSize: 27),
+                    ),
+                    const SizedBox(height: 5),
+                    Text(
+                      user.address[0],
+                      style: TextStyle(fontSize: 20, color: Colors.grey),
+                    ),
+                    const SizedBox(height: 20),
+                    _buildPersonalInfo(),
+                    const SizedBox(height: 15),
+                    Divider(),
+                    const SizedBox(height: 15),
+                    _buildCredentialInfo(),
+                    const SizedBox(height: 18),
+                    Divider(),
+                    const SizedBox(height: 18),
+                    _buildOperations(),
+                    const SizedBox(height: 18),
+                    Divider(),
+                    const SizedBox(height: 18),
+                    _buildContactInfo(),
+                  ],
+                ),
+              ));
   }
 
   Widget _buildMobileLayout() {
@@ -24,18 +129,18 @@ class UserDetail extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.center,
       children: [
         const SizedBox(height: 10),
-        const CircleAvatar(
+        CircleAvatar(
           radius: 85,
-          backgroundImage: AssetImage('asset/logo_image/goat.jpg'),
+          backgroundImage: AssetImage(user.profilePicture[0]),
         ),
         const SizedBox(height: 10),
-        const Text(
-          "Dawit Nigus",
+        Text(
+          user.firstName,
           style: TextStyle(fontWeight: FontWeight.bold, fontSize: 27),
         ),
         const SizedBox(height: 5),
-        const Text(
-          "Hawassa, Ethiopia",
+        Text(
+          user.address[0],
           style: TextStyle(fontSize: 20, color: Colors.grey),
         ),
         const SizedBox(height: 20),
@@ -66,18 +171,18 @@ class UserDetail extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               const SizedBox(height: 10),
-              const CircleAvatar(
+              CircleAvatar(
                 radius: 85,
-                backgroundImage: AssetImage('asset/logo_image/goat.jpg'),
+                backgroundImage: AssetImage(user.profilePicture[0]),
               ),
               const SizedBox(height: 10),
-              const Text(
-                "Dawit Nigus",
+              Text(
+                user.firstName,
                 style: TextStyle(fontWeight: FontWeight.bold, fontSize: 27),
               ),
               const SizedBox(height: 5),
-              const Text(
-                "Hawassa, Ethiopia",
+              Text(
+                user.address[0],
                 style: TextStyle(fontSize: 20, color: Colors.grey),
               ),
               const SizedBox(height: 20),
@@ -118,13 +223,13 @@ class UserDetail extends StatelessWidget {
           style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
         ),
         const SizedBox(height: 10),
-        _buildInfoRow('Gender', 'Male'),
+        _buildInfoRow('Gender', user.gender),
         const SizedBox(height: 18),
-        _buildInfoRow('Region/Woreda', 'Oromia/East Shewa'),
+        _buildInfoRow('Region/Woreda', user.region),
         const SizedBox(height: 18),
         _buildInfoRow('Number of Share Hold', '300'),
         const SizedBox(height: 18),
-        _buildInfoRow('Date of Birth', '20/20/2001'),
+        _buildInfoRow('Date of Birth', user.birthDate),
         const SizedBox(height: 18),
         _buildInfoRow('Registration Date', '20/12/2004'),
       ],
@@ -140,8 +245,8 @@ class UserDetail extends StatelessWidget {
           style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
         ),
         const SizedBox(height: 10),
-        _buildImageRow('Identification', 'asset/logo_image/goat.jpg',
-            'asset/logo_image/goat.jpg'),
+        _buildImageRow(
+            'Identification', user.kebeleIDPhoto[0], user.kebeleIDPhoto[1]),
       ],
     );
   }
@@ -173,9 +278,9 @@ class UserDetail extends StatelessWidget {
           style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
         ),
         const SizedBox(height: 10),
-        _buildContactRow(Icons.call, "+2519-4203-0866"),
+        _buildContactRow(Icons.call, user.phoneNumber),
         const SizedBox(height: 18),
-        _buildContactRow(Icons.email, "dawitnigus45@gmail.com"),
+        _buildContactRow(Icons.email, user.email),
       ],
     );
   }

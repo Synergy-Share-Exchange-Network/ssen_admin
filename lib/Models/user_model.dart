@@ -1,7 +1,5 @@
 import 'dart:convert';
 
-import 'package:ssen_admin/Models/log_model.dart';
-
 class UserModel {
   final String firstName;
   final String lastName;
@@ -9,7 +7,7 @@ class UserModel {
   String identification;
   String userCreatedDate;
   String email;
-  final UserRole role;
+  String role;
   String title;
   String gender;
   String birthDate;
@@ -33,7 +31,7 @@ class UserModel {
     identification,
     userCreatedDate,
     email,
-    required this.role,
+    role,
     title,
     gender,
     birthDate,
@@ -53,7 +51,7 @@ class UserModel {
   })  : identification = identification ?? '',
         userCreatedDate = userCreatedDate ?? '',
         email = email ?? '',
-        // role = role ?? '',
+        role = role ?? 'user',
         title = title ?? '',
         gender = gender ?? '',
         birthDate = birthDate ?? '',
@@ -78,7 +76,7 @@ class UserModel {
     String? identification,
     String? userCreatedDate,
     String? email,
-    UserRole? role,
+    String? role,
     String? title,
     String? gender,
     String? birthDate,
@@ -132,7 +130,7 @@ class UserModel {
     result.addAll({'identification': identification});
     result.addAll({'userCreatedDate': userCreatedDate});
     result.addAll({'email': email});
-    result.addAll({'role': role.name});
+    result.addAll({'role': role});
     result.addAll({'title': title});
     result.addAll({'gender': gender});
     result.addAll({'birthDate': birthDate});
@@ -197,6 +195,6 @@ void main(List<String> args) {
       firstName: 'birhan',
       lastName: 'mulugeta',
       phoneNumber: '09876543',
-      role: UserRole.user);
+      role: 'user');
   print(x.toMap());
 }

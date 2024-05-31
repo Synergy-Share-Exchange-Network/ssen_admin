@@ -1,24 +1,24 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:ssen_admin/Models/announcement_model.dart';
-import 'package:ssen_admin/Models/company_profile_model.dart';
-import 'package:ssen_admin/Models/faq_model.dart';
-import 'package:ssen_admin/Models/key_figure_model.dart';
-import 'package:ssen_admin/Models/log_model.dart';
-import 'package:ssen_admin/Models/term_condition.dart';
-import 'package:ssen_admin/Models/testimonial_model.dart';
-import 'package:ssen_admin/Models/user_model.dart';
-import 'package:ssen_admin/Models/why_invest.dart';
-import 'package:ssen_admin/Repository/firebase/key%20words/collection_name.dart';
-import 'package:ssen_admin/Repository/firebase/model%20methods/firebase_announcement_methods.dart';
-import 'package:ssen_admin/Repository/firebase/model%20methods/firebase_company_profile_methods.dart';
-import 'package:ssen_admin/Repository/firebase/model%20methods/firebase_faq_methods.dart';
-import 'package:ssen_admin/Repository/firebase/model%20methods/firebase_key_figure_methods.dart';
-import 'package:ssen_admin/Repository/firebase/model%20methods/firebase_log_methods.dart';
-import 'package:ssen_admin/Repository/firebase/model%20methods/firebase_term_condition_methods.dart';
-import 'package:ssen_admin/Repository/firebase/model%20methods/firebase_testimonial_methods.dart';
-import 'package:ssen_admin/Repository/firebase/model%20methods/firebase_user_methods.dart';
-import 'package:ssen_admin/Repository/firebase/model%20methods/firebase_why_invest_methods.dart';
 
+import '../../../Models/announcement_model.dart';
+import '../../../Models/company_profile_model.dart';
+import '../../../Models/faq_model.dart';
+import '../../../Models/key_figure_model.dart';
+import '../../../Models/log_model.dart';
+import '../../../Models/term_condition.dart';
+import '../../../Models/testimonial_model.dart';
+import '../../../Models/user_model.dart';
+import '../../../Models/why_invest.dart';
+import '../key words/collection_name.dart';
+import 'firebase_announcement_methods.dart';
+import 'firebase_company_profile_methods.dart';
+import 'firebase_faq_methods.dart';
+import 'firebase_key_figure_methods.dart';
+import 'firebase_log_methods.dart';
+import 'firebase_term_condition_methods.dart';
+import 'firebase_testimonial_methods.dart';
+import 'firebase_user_methods.dart';
+import 'firebase_why_invest_methods.dart';
 
 class FirebaseUpdateMethodUser {
   update(UserModel modifier, String id, String reason, String attribute,

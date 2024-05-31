@@ -1,8 +1,9 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:intl/intl.dart';
-import 'package:ssen_admin/Models/ML%20models/ML_purchase_model.dart';
-import 'package:ssen_admin/Models/company_profile_model.dart';
-import 'package:ssen_admin/Repository/firebase/key%20words/collection_name.dart';
+
+import '../../../../Models/ML models/ML_purchase_model.dart';
+import '../../../../Models/company_profile_model.dart';
+import '../../key words/collection_name.dart';
 
 class FirebaseMLshareData {
   Future<MLPurchaseModel> read(String id, bool isPrimary) async {

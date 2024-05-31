@@ -1,60 +1,57 @@
 import 'dart:typed_data';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:ssen_admin/Models/company_profile_model.dart';
-import 'package:ssen_admin/Models/user_model.dart';
-import 'package:ssen_admin/Repository/firebase/firebase_storage_methods.dart';
-import 'package:ssen_admin/Repository/firebase/model%20methods/firebase_company_profile_methods.dart';
-import 'package:ssen_admin/Repository/firebase/model%20methods/firebase_user_methods.dart';
+import 'package:flutter/foundation.dart';
 import 'package:uuid/uuid.dart';
+
+import '../../../../Models/company_profile_model.dart';
+import '../../../../Models/user_model.dart';
+import '../../firebase_storage_methods.dart';
+import '../../model methods/firebase_company_profile_methods.dart';
+import '../../model methods/firebase_user_methods.dart';
 
 class AuthMethods {
   Future<String> signUpUser({
     required UserModel user,
     required String password,
-    required Uint8List file,
+    Uint8List? file,
   }) async {
     final FirebaseAuth auth = FirebaseAuth.instance;
     final FirebaseFirestore firestore = FirebaseFirestore.instance;
     String res = "some error has occured";
+    String photoURLWithThumbnails;
     try {
-      print("555555555");
       if (user.firstName.isNotEmpty ||
           user.lastName.isNotEmpty ||
           password.isNotEmpty ||
-          user.email.isNotEmpty ||
-          file != null) {
-        print("666666666");
-
+          user.email.isNotEmpty) {
+        print("object");
         // register user
         UserCredential cred = await auth.createUserWithEmailAndPassword(
             email: user.email, password: password);
         print(cred.user!.uid);
-        print("7777777777777");
-
-        String photoURL = await FirebaseStorageMethods()
-            .uploadImageToStorageWithoutCompression(
-                "profile pics/${auth.currentUser!.uid}/image/${const Uuid().v1()}",
-                file);
-        // String photoURL = await FirebaseStorageMethods().uploadImageToStorage(
-        //     "profile pics/${_auth.currentUser!.uid}/image/${const Uuid().v1()}",
-        //     file);
-        print("8888888888888888");
-
-        // String thumbnailsPhotoURL = await FirebaseStorageMethods()
-        //     .uploadImageToStorageThumbnails(
-        //         "profile pics/${_auth.currentUser!.uid}/thumbnail/${const Uuid().v1()}",
-        //         file);
-        print("9999999999999");
-
-        // String photoURLWithThumbnails =
-        //     '$photoURL<thumbnail>$thumbnailsPhotoURL';
-        // user.profilePicture = [photoURLWithThumbnails];
-        user.profilePicture = [photoURL];
+        if (file != null) {
+          String photoURL = await FirebaseStorageMethods().uploadImageToStorage(
+              "profile pics/${auth.currentUser!.uid}/image/${const Uuid().v1()}",
+              file);
+          if (!kIsWeb) {
+            String thumbnailsPhotoURL = await FirebaseStorageMethods()
+                .uploadImageToStorageThumbnails(
+                    "profile pics/${auth.currentUser!.uid}/thumbnail/${const Uuid().v1()}",
+                    file);
+            photoURLWithThumbnails = '$photoURL<thumbnail>$thumbnailsPhotoURL';
+          } else {
+            photoURLWithThumbnails = '$photoURL<thumbnail>$photoURL';
+          }
+          user.profilePicture = [photoURLWithThumbnails];
+        }
         user.userCreatedDate = DateTime.now().toString().substring(0, 10);
         user.identification = cred.user!.uid;
 
         await FirebaseUserMethods().create(user);
+        print("vvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvv");
+        print(user);
+        print("vvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvv");
 
         res = "success";
       }
@@ -115,13 +112,19 @@ class AuthMethods {
     return res;
   }
 
-  Future<String> signUpCompany(
-      {required CompanyProfileModel company,
-      required String password,
-      List<Uint8List>? documents}) async {
+  Future<String> signUpCompany({
+    required CompanyProfileModel company,
+    required String password,
+    Uint8List? logo,
+    Uint8List? tradeLicense,
+    Uint8List? shareLicense,
+  }) async {
     final FirebaseAuth auth = FirebaseAuth.instance;
     final FirebaseFirestore firestore = FirebaseFirestore.instance;
-    List<String> productImages = [];
+    String photoURLWithThumbnails;
+    String photoURLWithThumbnails2;
+    String photoURLWithThumbnails3;
+
     String res = "some error has occured";
     try {
       if (company.name.isNotEmpty ||
@@ -132,23 +135,58 @@ class AuthMethods {
         UserCredential cred = await auth.createUserWithEmailAndPassword(
             email: company.email, password: password);
         print(cred.user!.uid);
+        print(logo != null);
+        print(shareLicense != null);
+        print(tradeLicense != null);
 
-        if (documents != null) {
-          for (var document in documents) {
-            String photoURL = await FirebaseStorageMethods()
-                .uploadImageToStorage(
-                    "product/${cred.user!.uid}/image/${const Uuid().v4()}",
-                    document);
-            String thumbnailURL = await FirebaseStorageMethods()
+        if (logo != null) {
+          String photoURL = await FirebaseStorageMethods().uploadImageToStorage(
+              "logo/${auth.currentUser!.uid}/image/${const Uuid().v1()}", logo);
+          if (!kIsWeb) {
+            String thumbnailsPhotoURL = await FirebaseStorageMethods()
                 .uploadImageToStorageThumbnails(
-                    "product/${cred.user!.uid}/thumbnail/${const Uuid().v4()}",
-                    document);
-            String imageURL = "$photoURL<thumbnail>$thumbnailURL";
-            productImages.add(imageURL);
-            print(productImages);
+                    "logo/${auth.currentUser!.uid}/thumbnail/${const Uuid().v1()}",
+                    logo);
+            photoURLWithThumbnails = '$photoURL<thumbnail>$thumbnailsPhotoURL';
+          } else {
+            photoURLWithThumbnails = '$photoURL<thumbnail>$photoURL';
           }
+          company.logoImage = [photoURLWithThumbnails];
+        }
+        if (shareLicense != null) {
+          String photoURL = await FirebaseStorageMethods().uploadImageToStorage(
+              "shareLicense/${auth.currentUser!.uid}/image/${const Uuid().v1()}",
+              shareLicense);
+          if (!kIsWeb) {
+            String thumbnailsPhotoURL = await FirebaseStorageMethods()
+                .uploadImageToStorageThumbnails(
+                    "logo/${auth.currentUser!.uid}/thumbnail/${const Uuid().v1()}",
+                    shareLicense);
+            photoURLWithThumbnails2 = '$photoURL<thumbnail>$thumbnailsPhotoURL';
+          } else {
+            photoURLWithThumbnails2 = '$photoURL<thumbnail>$photoURL';
+          }
+          company.shareSalesLicense = [photoURLWithThumbnails2];
+        }
+        if (tradeLicense != null) {
+          String photoURL = await FirebaseStorageMethods().uploadImageToStorage(
+              "tradeLicense/${auth.currentUser!.uid}/image/${const Uuid().v1()}",
+              tradeLicense);
+          if (!kIsWeb) {
+            String thumbnailsPhotoURL = await FirebaseStorageMethods()
+                .uploadImageToStorageThumbnails(
+                    "logo/${auth.currentUser!.uid}/thumbnail/${const Uuid().v1()}",
+                    tradeLicense);
+            photoURLWithThumbnails3 = '$photoURL<thumbnail>$thumbnailsPhotoURL';
+          } else {
+            photoURLWithThumbnails3 = '$photoURL<thumbnail>$photoURL';
+          }
+          company.tradeLicense = [photoURLWithThumbnails3];
         }
         company.identification = cred.user!.uid;
+        company.createdDay = DateTime.now().toString();
+        print("ccccccccccccccccccccccccccccccccccccccccccccccccccccc");
+        print(company);
         await FirebaseCompanyProfileMethods().create(company);
         res = "success";
       }

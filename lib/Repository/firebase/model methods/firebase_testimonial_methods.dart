@@ -1,9 +1,10 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:ssen_admin/Models/company_profile_model.dart';
-import 'package:ssen_admin/Models/testimonial_model.dart';
-import 'package:ssen_admin/Repository/firebase/key%20words/collection_name.dart';
-import 'package:ssen_admin/Repository/firebase/model%20abstract/firebase_testimonial_abstract.dart';
 import 'package:uuid/uuid.dart';
+
+import '../../../Models/company_profile_model.dart';
+import '../../../Models/testimonial_model.dart';
+import '../key words/collection_name.dart';
+import '../model abstract/firebase_testimonial_abstract.dart';
 
 class FirebaseTestimonialMethods implements FirebaseTestimonialAbstract {
   @override

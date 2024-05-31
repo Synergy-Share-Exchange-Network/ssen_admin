@@ -1,5 +1,5 @@
-import 'package:ssen_admin/Models/company_profile_model.dart';
-import 'package:ssen_admin/Models/term_condition.dart';
+import '../../../Models/company_profile_model.dart';
+import '../../../Models/term_condition.dart';
 
 abstract class FirebaseTermConditionAbstract {
   Future<String> create(

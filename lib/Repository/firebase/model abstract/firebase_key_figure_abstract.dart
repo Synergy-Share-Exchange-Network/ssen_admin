@@ -1,6 +1,6 @@
-import 'package:ssen_admin/Models/company_profile_model.dart';
-import 'package:ssen_admin/Models/key_figure_model.dart';
-import 'package:ssen_admin/Models/user_model.dart';
+import '../../../Models/company_profile_model.dart';
+import '../../../Models/key_figure_model.dart';
+import '../../../Models/user_model.dart';
 
 abstract class FirebaseKeyFigureAbstract {
   Future<String> create(CompanyProfileModel companyProfile,

@@ -1,10 +1,11 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:ssen_admin/Models/log_model.dart';
-import 'package:ssen_admin/Models/user_model.dart';
-import 'package:ssen_admin/Repository/firebase/key%20words/collection_name.dart';
-import 'package:ssen_admin/Repository/firebase/model%20abstract/firebase_user_abstract.dart';
-import 'package:ssen_admin/Repository/firebase/model%20methods/firebase_log_methods.dart';
-import 'package:ssen_admin/utils/date_method.dart';
+
+import '../../../Models/log_model.dart';
+import '../../../Models/user_model.dart';
+import '../../../utils/date_method.dart';
+import '../key words/collection_name.dart';
+import '../model abstract/firebase_user_abstract.dart';
+import 'firebase_log_methods.dart';
 
 class FirebaseUserMethods implements FirebaseUserAbstract {
   @override
@@ -63,7 +64,7 @@ class FirebaseUserMethods implements FirebaseUserAbstract {
           firstName: 'firstName',
           lastName: 'lastName',
           phoneNumber: 'phoneNumber',
-          role: UserRole.user);
+          role: 'user');
       return user;
     }
   }

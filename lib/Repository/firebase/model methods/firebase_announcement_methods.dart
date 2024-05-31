@@ -1,12 +1,13 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:ssen_admin/Models/announcement_model.dart';
-import 'package:ssen_admin/Models/company_profile_model.dart';
-import 'package:ssen_admin/Models/log_model.dart';
-import 'package:ssen_admin/Models/user_model.dart';
-import 'package:ssen_admin/Repository/firebase/key%20words/collection_name.dart';
-import 'package:ssen_admin/Repository/firebase/model%20abstract/firebase_announcement_abstract.dart';
-import 'package:ssen_admin/Repository/firebase/model%20methods/firebase_log_methods.dart';
 import 'package:uuid/uuid.dart';
+
+import '../../../Models/announcement_model.dart';
+import '../../../Models/company_profile_model.dart';
+import '../../../Models/log_model.dart';
+import '../../../Models/user_model.dart';
+import '../key words/collection_name.dart';
+import '../model abstract/firebase_announcement_abstract.dart';
+import 'firebase_log_methods.dart';
 
 class FirebaseAnnouncementMethods implements FirebaseAnnouncementAbstract {
   @override

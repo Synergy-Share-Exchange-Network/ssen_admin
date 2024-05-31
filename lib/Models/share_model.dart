@@ -4,16 +4,16 @@ import 'dart:convert';
 class ShareModel {
   final double savingAccountPercentage;
   final String proclamationNumber;
-  final int minimumNumberOfBuyer;
-  final int maximumNumberOfBuyer;
-  final List<String> bankInformation;
-  final List<String> shareImage;
-  final double unitSharePrice;
-  final double noOfShares;
-  final double divident;
-  final double minimumPaymentInPercent;
-  final double minimumNumberOfSharesToBuy;
-  final double maximumNumberOfSharesToBuy;
+  int minimumNumberOfBuyer;
+  int maximumNumberOfBuyer;
+  List<String> bankInformation;
+  List<String> shareImage;
+  double unitSharePrice;
+  double noOfShares;
+  double divident;
+  double minimumPaymentInPercent;
+  double minimumNumberOfSharesToBuy;
+  double maximumNumberOfSharesToBuy;
   String requirement;
   String identification;
   String companyID;
@@ -28,16 +28,16 @@ class ShareModel {
   ShareModel({
     required this.savingAccountPercentage,
     required this.proclamationNumber,
-    required this.minimumNumberOfBuyer,
-    required this.maximumNumberOfBuyer,
-    required this.bankInformation,
-    required this.shareImage,
-    required this.unitSharePrice,
-    required this.noOfShares,
-    required this.divident,
-    required this.minimumPaymentInPercent,
-    required this.minimumNumberOfSharesToBuy,
-    required this.maximumNumberOfSharesToBuy,
+    minimumNumberOfBuyer,
+    maximumNumberOfBuyer,
+    bankInformation,
+    shareImage,
+    unitSharePrice,
+    noOfShares,
+    divident,
+    minimumPaymentInPercent,
+    minimumNumberOfSharesToBuy,
+    maximumNumberOfSharesToBuy,
     requirement,
     identification,
     companyID,
@@ -49,15 +49,25 @@ class ShareModel {
     dateAdded,
     isDeleted,
     isHidden,
-  })  : requirement = requirement ?? [''],
-        identification = identification ?? [''],
-        companyID = companyID ?? [''],
-        description = description ?? [''],
+  })  : minimumNumberOfBuyer = minimumNumberOfBuyer ?? 0,
+        maximumNumberOfBuyer = maximumNumberOfBuyer ?? 0,
+        bankInformation = bankInformation ?? [''],
+        shareImage = shareImage ?? [''],
+        unitSharePrice = unitSharePrice ?? 0.0,
+        noOfShares = noOfShares ?? 0.0,
+        divident = divident ?? 0.0,
+        minimumPaymentInPercent = minimumPaymentInPercent ?? 0.0,
+        minimumNumberOfSharesToBuy = minimumNumberOfSharesToBuy ?? 0.0,
+        maximumNumberOfSharesToBuy = maximumNumberOfSharesToBuy ?? 0.0,
+        requirement = requirement ?? '',
+        identification = identification ?? '',
+        companyID = companyID ?? '',
+        description = description ?? '',
         searchKeyWords = searchKeyWords ?? [''],
         returnDividentDescription = returnDividentDescription ?? [''],
-        timeToReturnRemainPayment = timeToReturnRemainPayment ?? [''],
-        currency = currency ?? [''],
-        dateAdded = dateAdded ?? [''],
+        timeToReturnRemainPayment = timeToReturnRemainPayment ?? 0,
+        currency = currency ?? '',
+        dateAdded = dateAdded ?? '',
         isDeleted = isDeleted ?? false,
         isHidden = isHidden ?? false;
 

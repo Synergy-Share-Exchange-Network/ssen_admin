@@ -1,5 +1,5 @@
-import 'package:ssen_admin/Models/company_profile_model.dart';
-import 'package:ssen_admin/Models/testimonial_model.dart';
+import '../../../Models/company_profile_model.dart';
+import '../../../Models/testimonial_model.dart';
 
 abstract class FirebaseTestimonialAbstract {
   Future<String> create(

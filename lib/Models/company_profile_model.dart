@@ -22,6 +22,7 @@ class CompanyProfileModel {
   String phoneNumber;
   String poBox;
   String tinNumber;
+  String createdDay;
 
   List<String> whyInvestID;
   List<String> subscribersID;
@@ -41,6 +42,9 @@ class CompanyProfileModel {
   List<String> longLat;
   List<String> socialMediaLink;
   List<String> secondaryMarket;
+  List<String> shareSalesLicense;
+  List<String> adminRejection;
+  List<String> tradeLicense;
 
   double capital;
   double aimedCapital;
@@ -71,6 +75,7 @@ class CompanyProfileModel {
     phoneNumber,
     poBox,
     tinNumber,
+    createdDay,
     subscribersID,
     brandImage,
     logoImage,
@@ -88,6 +93,9 @@ class CompanyProfileModel {
     longLat,
     socialMediaLink,
     secondaryMarket,
+    tradeLicense,
+    shareSalesLicense,
+    adminRejection,
     capital,
     aimedCapital,
     isDeleted,
@@ -111,6 +119,7 @@ class CompanyProfileModel {
         phoneNumber = phoneNumber ?? '',
         poBox = poBox ?? '',
         tinNumber = tinNumber ?? '',
+        createdDay = createdDay ?? '',
         subscribersID = subscribersID ?? [''],
         brandImage = brandImage ?? [''],
         logoImage = logoImage ?? [''],
@@ -128,6 +137,9 @@ class CompanyProfileModel {
         longLat = longLat ?? [''],
         socialMediaLink = socialMediaLink ?? [''],
         secondaryMarket = secondaryMarket ?? [''],
+        shareSalesLicense = shareSalesLicense ?? [''],
+        adminRejection = adminRejection ?? [''],
+        tradeLicense = tradeLicense ?? [''],
         capital = capital ?? 0.0,
         aimedCapital = aimedCapital ?? 0.0,
         isDeleted = isDeleted ?? false,
@@ -158,6 +170,7 @@ class CompanyProfileModel {
     String? phoneNumber,
     String? poBox,
     String? tinNumber,
+    String? createdDay,
     List<String>? subscribersID,
     List<String>? brandImage,
     List<String>? logoImage,
@@ -175,6 +188,9 @@ class CompanyProfileModel {
     List<String>? longLat,
     List<String>? socialMediaLink,
     List<String>? secondaryMarket,
+    List<String>? tradeLicense,
+    List<String>? shareSalesLicense,
+    List<String>? adminRejection,
     double? capital,
     double? aimedCapital,
     bool? isDeleted,
@@ -205,6 +221,7 @@ class CompanyProfileModel {
       phoneNumber: phoneNumber ?? this.phoneNumber,
       poBox: poBox ?? this.poBox,
       tinNumber: tinNumber ?? this.tinNumber,
+      createdDay: createdDay ?? this.createdDay,
       subscribersID: subscribersID ?? this.subscribersID,
       brandImage: brandImage ?? this.brandImage,
       logoImage: logoImage ?? this.logoImage,
@@ -222,6 +239,9 @@ class CompanyProfileModel {
       longLat: longLat ?? this.longLat,
       socialMediaLink: socialMediaLink ?? this.socialMediaLink,
       secondaryMarket: secondaryMarket ?? this.secondaryMarket,
+      shareSalesLicense: shareSalesLicense ?? this.shareSalesLicense,
+      adminRejection: adminRejection ?? this.adminRejection,
+      tradeLicense: tradeLicense ?? this.tradeLicense,
       capital: capital ?? this.capital,
       aimedCapital: aimedCapital ?? this.aimedCapital,
       isDeleted: isDeleted ?? this.isDeleted,
@@ -256,6 +276,7 @@ class CompanyProfileModel {
     result.addAll({'phoneNumber': phoneNumber});
     result.addAll({'poBox': poBox});
     result.addAll({'tinNumber': tinNumber});
+    result.addAll({'createdDay': createdDay});
     result.addAll({'subscribersID': subscribersID});
     result.addAll({'brandImage': brandImage});
     result.addAll({'logoImage': logoImage});
@@ -273,6 +294,9 @@ class CompanyProfileModel {
     result.addAll({'longLat': longLat});
     result.addAll({'socialMediaLink': socialMediaLink});
     result.addAll({'secondaryMarket': secondaryMarket});
+    result.addAll({'tradeLicense': tradeLicense});
+    result.addAll({'shareSalesLicense': shareSalesLicense});
+    result.addAll({'adminRejection': adminRejection});
     result.addAll({'capital': capital});
     result.addAll({'aimedCapital': aimedCapital});
     result.addAll({'isDeleted': isDeleted});
@@ -306,6 +330,7 @@ class CompanyProfileModel {
       phoneNumber: map['phoneNumber'] ?? '',
       poBox: map['poBox'] ?? '',
       tinNumber: map['tinNumber'] ?? '',
+      createdDay: map['createdDay'] ?? '',
       subscribersID: List<String>.from(map['subscribersID']),
       brandImage: List<String>.from(map['brandImage']),
       logoImage: List<String>.from(map['logoImage']),
@@ -324,6 +349,9 @@ class CompanyProfileModel {
       longLat: List<String>.from(map['longLat']),
       socialMediaLink: List<String>.from(map['socialMediaLink']),
       secondaryMarket: List<String>.from(map['secondaryMarket']),
+      shareSalesLicense: List<String>.from(map['shareSalesLicense']),
+      adminRejection: List<String>.from(map['adminRejection']),
+      tradeLicense: List<String>.from(map['tradeLicense']),
       capital: map['capital']?.toDouble() ?? 0.0,
       aimedCapital: map['aimedCapital']?.toDouble() ?? 0.0,
       isDeleted: map['isDeleted'] ?? false,
@@ -340,7 +368,7 @@ class CompanyProfileModel {
 
   @override
   String toString() {
-    return 'CompanyProfileModel(identification: $identification, name: $name, businessSector: $businessSector, lineOfBusiness: $lineOfBusiness, yearOfEstablishment: $yearOfEstablishment, email: $email, motto: $motto, shareID: $shareID, description: $description, mission: $mission, vision: $vision, value: $value, target: $target, goal: $goal, whyInvestID: $whyInvestID, history: $history, mileStone: $mileStone, locationDescription: $locationDescription, userRequirment: $userRequirment, phoneNumber: $phoneNumber, poBox: $poBox, tinNumber: $tinNumber, subscribersID: $subscribersID, brandImage: $brandImage, logoImage: $logoImage, productID: $productID, serviceID: $serviceID, employee: $employee, keyFigureID: $keyFigureID, testimonialID: $testimonialID, partners: $partners, awardAndRecognition: $awardAndRecognition, bankAccount: $bankAccount, announcementID: $announcementID, faqID: $faqID, termconditionID: $termconditionID, longLat: $longLat, socialMediaLink: $socialMediaLink,secondaryMarket: $secondaryMarket, capital: $capital, aimedCapital: $aimedCapital, isDeleted: $isDeleted, isHidden: $isHidden,isVerified: $isVerified, isBanned: $isBanned)';
+    return 'CompanyProfileModel(identification: $identification, name: $name, businessSector: $businessSector, lineOfBusiness: $lineOfBusiness, yearOfEstablishment: $yearOfEstablishment, email: $email, motto: $motto, shareID: $shareID, description: $description, mission: $mission, vision: $vision, value: $value, target: $target, goal: $goal, whyInvestID: $whyInvestID, history: $history, mileStone: $mileStone, locationDescription: $locationDescription, userRequirment: $userRequirment, phoneNumber: $phoneNumber, poBox: $poBox, tinNumber: $tinNumber, createdDay:$createdDay, subscribersID: $subscribersID, brandImage: $brandImage, logoImage: $logoImage, productID: $productID, serviceID: $serviceID, employee: $employee, keyFigureID: $keyFigureID, testimonialID: $testimonialID, partners: $partners, awardAndRecognition: $awardAndRecognition, bankAccount: $bankAccount, announcementID: $announcementID, faqID: $faqID, termconditionID: $termconditionID, longLat: $longLat, socialMediaLink: $socialMediaLink,secondaryMarket: $secondaryMarket, tradeLicense:$tradeLicense, shareSalesLicense: $shareSalesLicense, adminRejection:$adminRejection, capital: $capital, aimedCapital: $aimedCapital, isDeleted: $isDeleted, isHidden: $isHidden,isVerified: $isVerified, isBanned: $isBanned)';
   }
 }
 

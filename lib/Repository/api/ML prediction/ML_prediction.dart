@@ -1,4 +1,4 @@
-import 'package:ssen_admin/Models/purchase_model.dart';
+import '../../../Models/purchase_model.dart';
 
 class MLPridiction {
   double predictPriceForSecondary(List<PurchaseModel> purchases) {

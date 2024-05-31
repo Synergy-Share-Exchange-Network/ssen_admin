@@ -1,13 +1,10 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:ssen_admin/Models/company_profile_model.dart';
-import 'package:ssen_admin/Models/faq_model.dart';
-import 'package:ssen_admin/Models/log_model.dart';
-import 'package:ssen_admin/Repository/firebase/model%20abstract/firebase_faq_abstract.dart';
-import 'package:ssen_admin/Repository/firebase/model%20methods/firebase_log_methods.dart';
-
 import 'package:uuid/uuid.dart';
 
+import '../../../Models/company_profile_model.dart';
+import '../../../Models/faq_model.dart';
 import '../key words/collection_name.dart';
+import '../model abstract/firebase_faq_abstract.dart';
 
 class FirebaseFaqMethod implements FirebaseFaqAbstract {
   @override
