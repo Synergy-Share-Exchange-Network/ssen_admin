@@ -1,8 +1,12 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:ssen_admin/Models/company_profile_model.dart';
+import 'package:ssen_admin/Models/user_model.dart';
+import 'package:ssen_admin/Repository/firebase/model%20methods/firebase_update_methods.dart';
 import 'package:ssen_admin/utils/utils.dart';
 
+import '../provider/admin_provider.dart';
 import '../services/theme/text_theme.dart';
 
 class RequestDetailPage extends StatefulWidget {
@@ -15,8 +19,104 @@ class RequestDetailPage extends StatefulWidget {
 }
 
 class _RequestDetailPageState extends State<RequestDetailPage> {
+  Future<void> acceptRequest(UserModel user, String id) async {
+    showDialog(
+      context: context,
+      builder: (ctx) => AlertDialog(
+        content: Container(
+          padding: EdgeInsets.all(20),
+          height: 125,
+          child: Column(
+            children: const [
+              CircularProgressIndicator(),
+              SizedBox(
+                height: 20,
+              ),
+              Text("Accepting Request..."),
+            ],
+          ),
+        ),
+      ),
+    );
+    await FirebaseUpdateMethodUser().update(user, id, "Confirm Company is true",
+        'isVerified', true, CompanyProfileModel);
+    // await Provider.of<UserProvider>(context, listen: false).refreshUser();
+    Navigator.pop(context);
+    Navigator.pop(context);
+  }
+
+  void declineRequest(UserModel user, String id) {
+    TextEditingController reasonController = TextEditingController();
+    showDialog(
+      context: context,
+      builder: (context) {
+        return AlertDialog(
+          title: Text('Decline Request'),
+          content: TextField(
+            controller: reasonController,
+            decoration: InputDecoration(
+              hintText: 'Enter reason for decline',
+            ),
+            maxLines: 3,
+          ),
+          actions: [
+            TextButton(
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+              child: Text('Cancel'),
+            ),
+            ElevatedButton(
+              onPressed: () async {
+                showDialog(
+                  context: context,
+                  builder: (ctx) => AlertDialog(
+                    content: Container(
+                      padding: EdgeInsets.all(20),
+                      height: 125,
+                      child: Column(
+                        children: const [
+                          CircularProgressIndicator(),
+                          SizedBox(
+                            height: 20,
+                          ),
+                          Text("Declining Request..."),
+                        ],
+                      ),
+                    ),
+                  ),
+                );
+                await FirebaseUpdateMethodUser().update(
+                    user,
+                    id,
+                    reasonController.text.trim(),
+                    'adminRejection',
+                    [
+                      'false',
+                      reasonController.text.trim(),
+                      DateTime.now().toString()
+                    ],
+                    CompanyProfileModel);
+                // await Provider.of<UserProvider>(context, listen: false).refreshUser();
+                Navigator.pop(context);
+                Navigator.pop(context);
+                Navigator.pop(context);
+              },
+              child: Text('Submit'),
+            ),
+          ],
+        );
+      },
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
+    UserModel user = UserModel(
+        firstName: 'firstName',
+        lastName: 'lastName',
+        phoneNumber: 'phoneNumber',
+        identification: 'ide');
     return Scaffold(
       appBar: AppBar(
         title: Text('Request Details'),
@@ -123,13 +223,13 @@ class _RequestDetailPageState extends State<RequestDetailPage> {
                   children: [
                     ElevatedButton(
                       onPressed: () {
-                        // Handle accept action
+                        acceptRequest(user, widget.company.identification);
                       },
                       child: Text('Accept'),
                     ),
                     ElevatedButton(
                       onPressed: () {
-                        _showDeclineDialog(context);
+                        declineRequest(user, widget.company.identification);
                       },
                       child: Text('Decline'),
                       style: ElevatedButton.styleFrom(primary: Colors.red),
@@ -141,38 +241,6 @@ class _RequestDetailPageState extends State<RequestDetailPage> {
           ),
         ),
       ),
-    );
-  }
-
-  void _showDeclineDialog(BuildContext context) {
-    showDialog(
-      context: context,
-      builder: (context) {
-        return AlertDialog(
-          title: Text('Decline Request'),
-          content: TextField(
-            decoration: InputDecoration(
-              hintText: 'Enter reason for decline',
-            ),
-            maxLines: 3,
-          ),
-          actions: [
-            TextButton(
-              onPressed: () {
-                Navigator.of(context).pop();
-              },
-              child: Text('Cancel'),
-            ),
-            ElevatedButton(
-              onPressed: () {
-                // Handle decline action with reason
-                Navigator.of(context).pop();
-              },
-              child: Text('Submit'),
-            ),
-          ],
-        );
-      },
     );
   }
 }

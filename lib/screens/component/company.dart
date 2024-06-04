@@ -20,13 +20,13 @@ class Company extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final dark = SHelperFunction.isDarkMode(context);
-    CompanyProfileModel x = CompanyProfileModel(
-        name: "Habesha Ber",
-        businessSector: 'businessSector',
-        lineOfBusiness: 'lineOfBusiness',
-        yearOfEstablishment: 'yearOfEstablishment',
-        email: 'email',
-        locationDescription: 'Addis Abebea,Ethiopia');
+    // CompanyProfileModel x = CompanyProfileModel(
+    //     name: "Habesha Ber",
+    //     businessSector: 'businessSector',
+    //     lineOfBusiness: 'lineOfBusiness',
+    //     yearOfEstablishment: 'yearOfEstablishment',
+    //     email: 'email',
+    //     locationDescription: 'Addis Abebea,Ethiopia');
     return Scaffold(
       drawer: (MediaQuery.of(context).size.width > phoneSize) ? null : NavBar(),
       appBar: (MediaQuery.of(context).size.width > phoneSize)
