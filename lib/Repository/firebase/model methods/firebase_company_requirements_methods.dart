@@ -1,9 +1,8 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:ssen_user/Models/company_requirement_on_secondry_market_model.dart';
+import 'package:ssen_user/Repository/firebase/key%20words/collection_name.dart';
+import 'package:ssen_user/Repository/firebase/model%20abstract/firebase_company_requirements_abstract.dart';
 import 'package:uuid/uuid.dart';
-
-import '../../../Models/company_requirement_on_secondry_market_model.dart';
-import '../key words/collection_name.dart';
-import '../model abstract/firebase_company_requirements_abstract.dart';
 
 // import '../key words/collection_name.dart';
 

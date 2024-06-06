@@ -1,8 +1,8 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-
-import '../../../Models/log_model.dart';
-import '../../../Models/user_model.dart';
-import '../model abstract/firebase_log_abstract.dart';
+import 'package:ssen_user/Models/log_model.dart';
+import 'package:ssen_user/Models/user_model.dart';
+import 'package:ssen_user/Repository/firebase/model%20abstract/firebase_log_abstract.dart';
+import 'package:uuid/uuid.dart';
 
 class FirebaseLogMethods implements FirebaseLogAbstract {
   @override
@@ -10,9 +10,9 @@ class FirebaseLogMethods implements FirebaseLogAbstract {
       // UserRole role,
       UserModel user,
       String id,
-      ModifiedEntity entity,
-      LogLevel level,
-      LogAction action,
+      String entity,
+      String level,
+      String action,
       String reason,
       List<String> whatChanged) async {
     String res = "";
@@ -27,21 +27,21 @@ class FirebaseLogMethods implements FirebaseLogAbstract {
       // }
 
       // final logId = generateLogId(level.name);
-      // LogModel log = LogModel(
-      //     identification: const Uuid().v8(), // Generate a unique ID
-      //     date: DateTime.now(),
-      //     modifierID: user.identification,
-      //     // modifierRole: user.role, //r
-      //     modifiedID: id,
-      //     modifiedEntity: entity,
-      //     level: level, // Adjust level
-      //     action: action,
-      //     reason: reason,
-      //     whatChanged: whatChanged);
-      // await FirebaseFirestore.instance
-      //     .collection('log') // Target the "log" collection
-      //     .doc(log.identification)
-      //     .set(log.toMap());
+      LogModel log = LogModel(
+          identification: const Uuid().v8(), // Generate a unique ID
+          date: DateTime.now(),
+          modifierID: user.identification,
+          modifierRole: user.role, //r
+          modifiedID: id,
+          modifiedEntity: entity,
+          level: level, // Adjust level
+          action: action,
+          reason: reason,
+          whatChanged: whatChanged);
+      await FirebaseFirestore.instance
+          .collection('log') // Target the "log" collection
+          .doc(log.identification)
+          .set(log.toMap());
       res = "success";
     } catch (err) {
       res = err.toString();
