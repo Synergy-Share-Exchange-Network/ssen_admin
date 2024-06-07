@@ -1,13 +1,20 @@
-import 'package:ssen_user/Models/company_profile_model.dart';
-import 'package:ssen_user/Models/log_model.dart';
-import 'package:ssen_user/Models/share_model.dart';
-import 'package:ssen_user/Repository/firebase/model%20methods/firebase_company_profile_methods.dart';
-import 'package:ssen_user/Repository/firebase/model%20methods/firebase_company_requirements_methods.dart';
-import 'package:ssen_user/Repository/firebase/model%20methods/firebase_log_methods.dart';
-import 'package:ssen_user/Repository/firebase/model%20methods/firebase_share_methods.dart';
+import 'dart:typed_data';
 
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:flutter/foundation.dart';
+import 'package:ssen_admin/Repository/firebase/firebase_storage_methods.dart';
+import 'package:uuid/uuid.dart';
+
+import '../../../Models/company_profile_model.dart';
 import '../../../Models/company_requirement_on_secondry_market_model.dart';
+import '../../../Models/log_model.dart';
+import '../../../Models/share_model.dart';
 import '../../../Models/user_model.dart';
+import '../key words/collection_name.dart';
+import '../model methods/firebase_company_profile_methods.dart';
+import '../model methods/firebase_company_requirements_methods.dart';
+import '../model methods/firebase_log_methods.dart';
+import '../model methods/firebase_share_methods.dart';
 import '../model methods/firebase_update_methods.dart';
 
 class FirebaseCompanyServiceMethod {
@@ -35,8 +42,14 @@ class FirebaseCompanyServiceMethod {
       }
       FirebaseUpdateMethodUser().update(admin, company.identification, reason,
           'isVerified', company.isVerified, CompanyProfileModel);
-      FirebaseLogMethods().create(admin, company.identification,
-          'organizationProfile', 'critical', 'modification', reason, ['']);
+      FirebaseLogMethods().create(
+          admin,
+          company.identification,
+          ModifiedEntity.organizationProfile,
+          LogLevel.critical,
+          LogAction.modification,
+          reason,
+          ['']);
       //notify verification througn push notification and email
 
       res = "Success";
@@ -51,7 +64,7 @@ class FirebaseCompanyServiceMethod {
   Future<String> addShare(ShareModel share, CompanyProfileModel company) async {
     String res = "some error has occured";
     try {
-      FirebaseShareMethods().create(share, company);
+      // FirebaseShareMethods().create(share, company);
       //if it need to be saved to log think about it roba.
       res = "Success";
     } catch (e) {
@@ -92,8 +105,14 @@ class FirebaseCompanyServiceMethod {
     try {
       FirebaseUpdateMethodUser().update(admin, company.identification, reason,
           'isHidden', toBeHidden, CompanyProfileModel);
-      FirebaseLogMethods().create(admin, company.identification,
-          'organizationProfile', 'critical', 'modification', reason, ['']);
+      FirebaseLogMethods().create(
+          admin,
+          company.identification,
+          ModifiedEntity.organizationProfile,
+          LogLevel.critical,
+          LogAction.modification,
+          reason,
+          ['']);
       //notify verification througn push notification and email
       res = "Success";
     } catch (e) {
@@ -109,8 +128,14 @@ class FirebaseCompanyServiceMethod {
     try {
       FirebaseUpdateMethodUser().update(admin, company.identification, reason,
           'isBanned', toBeBanned, CompanyProfileModel);
-      FirebaseLogMethods().create(admin, company.identification,
-          'organizationProfile', 'critical', 'modification', reason, ['']);
+      FirebaseLogMethods().create(
+          admin,
+          company.identification,
+          ModifiedEntity.organizationProfile,
+          LogLevel.critical,
+          LogAction.modification,
+          reason,
+          ['']);
       //notify verification througn push notification and email
       res = "Success";
     } catch (e) {
@@ -120,61 +145,79 @@ class FirebaseCompanyServiceMethod {
     return res;
   }
 
-  Future<String> subscribeUser(
-      CompanyProfileModel company, UserModel user) async {
+  Future<String> updateCompanyLOgo(
+      {required Uint8List file,
+      required String companyId,
+      required List<String> logo}) async {
     String res = "some error has occured";
+    String photoURLWithThumbnails = "";
+    List<String> finalLogo = [''];
+
     try {
-      List<String> companyValue = company.subscribersID;
-      if (!companyValue.contains(user.identification)) {
-        companyValue.add(user.identification);
-        companyValue.removeWhere((value) => value == '');
+      if (file != null) {
+        String photoURL = await FirebaseStorageMethods().uploadImageToStorage(
+            "logo/${companyId}/image/${const Uuid().v1()}", file);
+        if (!kIsWeb) {
+          String thumbnailsPhotoURL = await FirebaseStorageMethods()
+              .uploadImageToStorageThumbnails(
+                  "logo/$companyId/thumbnail/${const Uuid().v1()}", file);
+          photoURLWithThumbnails = '$photoURL<thumbnail>$thumbnailsPhotoURL';
+        } else {
+          photoURLWithThumbnails = '$photoURL<thumbnail>$photoURL';
+        }
+        logo.insert(0, photoURLWithThumbnails);
+        logo.removeWhere((string) => string == "");
+
+        await FirebaseFirestore.instance
+            .collection(CollectionName.organization)
+            .doc(companyId)
+            .update({
+          'logoImage': logo,
+        });
+
+        // company.logoImage = [photoURLWithThumbnails];
       }
-
-      List<String> userValue = user.companiesId;
-      if (!userValue.contains(company.identification)) {
-        userValue.add(company.identification);
-        userValue.removeWhere((value) => value == '');
-      }
-
-      await FirebaseUpdateMethodUser().update(user, company.identification,
-          'reason', 'subscribersID', companyValue, CompanyProfileModel);
-
-      await FirebaseUpdateMethodUser().update(user, user.identification,
-          'reason', 'companiesId', userValue, UserModel);
-
-      //notify verification througn push notification and email
-      res = "Success";
-    } catch (e) {
-      res = e.toString();
+    } catch (err) {
+      res = err.toString();
     }
-
     return res;
   }
 
-  Future<String> unSubscribeUser(
-      CompanyProfileModel company, UserModel user) async {
+  Future<String> updateBrandImage(
+      {required Uint8List file,
+      required String companyId,
+      required List<String> brandImage}) async {
     String res = "some error has occured";
+    String photoURLWithThumbnails = "";
+    List<String> finalLogo = [''];
+
     try {
-      List<String> companyValue = company.subscribersID;
+      if (file != null) {
+        String photoURL = await FirebaseStorageMethods().uploadImageToStorage(
+            "logo/${companyId}/image/${const Uuid().v1()}", file);
+        if (!kIsWeb) {
+          String thumbnailsPhotoURL = await FirebaseStorageMethods()
+              .uploadImageToStorageThumbnails(
+                  "logo/$companyId/thumbnail/${const Uuid().v1()}", file);
+          photoURLWithThumbnails = '$photoURL<thumbnail>$thumbnailsPhotoURL';
+        } else {
+          photoURLWithThumbnails = '$photoURL<thumbnail>$photoURL';
+        }
+        brandImage.insert(0, photoURLWithThumbnails);
+        brandImage.removeWhere((string) => string == "");
 
-      companyValue.removeWhere((value) => value == user.identification);
+        await FirebaseFirestore.instance
+            .collection(CollectionName.organization)
+            .doc(companyId)
+            .update({
+          'brandImage': brandImage,
+        });
 
-      List<String> userValue = user.companiesId;
-
-      userValue.removeWhere((value) => value == company.identification);
-
-      await FirebaseUpdateMethodUser().update(user, company.identification,
-          'reason', 'subscribersID', companyValue, CompanyProfileModel);
-
-      await FirebaseUpdateMethodUser().update(user, user.identification,
-          'reason', 'companiesId', userValue, UserModel);
-
-      //notify verification througn push notification and email
-      res = "Success";
-    } catch (e) {
-      res = e.toString();
+        // company.logoImage = [photoURLWithThumbnails];
+      }
+    } catch (err) {
+      res = err.toString();
     }
-
     return res;
   }
 }

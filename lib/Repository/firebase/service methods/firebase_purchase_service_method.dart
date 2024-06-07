@@ -1,14 +1,7 @@
-import 'dart:typed_data';
-
-import 'package:firebase_auth/firebase_auth.dart';
-import 'package:flutter/foundation.dart';
-import 'package:ssen_user/Repository/firebase/firebase_storage_methods.dart';
-import 'package:ssen_user/utils/date_method.dart';
-import 'package:uuid/uuid.dart';
-
 import '../../../Models/purchase_model.dart';
 import '../../../Models/share_model.dart';
 import '../../../Models/user_model.dart';
+import '../../../utils/date_method.dart';
 import '../model methods/firebase_purchase_methods.dart';
 
 class FirebasePurchaseServiceMethod {
@@ -43,68 +36,9 @@ class FirebasePurchaseServiceMethod {
   // }
 
   Future<String> createPurchase(
-    PurchaseModel purchase,
-    ShareModel share,
-    UserModel user,
-    Uint8List? sign,
-    Uint8List? kebleIDFront,
-    Uint8List? kebleIDBack,
-  ) async {
+      PurchaseModel purchase, ShareModel share, UserModel user) async {
     String res = "some error has occured";
-    String photoURLWithThumbnails;
-    String photoURLWithThumbnails2;
-    String photoURLWithThumbnails3;
-    final FirebaseAuth auth = FirebaseAuth.instance;
-
     try {
-      //upload images
-      purchase.identification = const Uuid().v8();
-
-      if (sign != null) {
-        String photoURL = await FirebaseStorageMethods().uploadImageToStorage(
-            "sign/${auth.currentUser!.uid}/image/${const Uuid().v1()}", sign);
-        if (!kIsWeb) {
-          String thumbnailsPhotoURL = await FirebaseStorageMethods()
-              .uploadImageToStorageThumbnails(
-                  "sign/${auth.currentUser!.uid}/thumbnail/${const Uuid().v1()}",
-                  sign);
-          photoURLWithThumbnails = '$photoURL<thumbnail>$thumbnailsPhotoURL';
-        } else {
-          photoURLWithThumbnails = '$photoURL<thumbnail>$photoURL';
-        }
-        purchase.signature = photoURLWithThumbnails;
-      }
-      if (kebleIDFront != null) {
-        String photoURL = await FirebaseStorageMethods().uploadImageToStorage(
-            "kebleIDFront/${auth.currentUser!.uid}/image/${const Uuid().v1()}",
-            kebleIDFront);
-        if (!kIsWeb) {
-          String thumbnailsPhotoURL = await FirebaseStorageMethods()
-              .uploadImageToStorageThumbnails(
-                  "sign/${auth.currentUser!.uid}/thumbnail/${const Uuid().v1()}",
-                  kebleIDFront);
-          photoURLWithThumbnails2 = '$photoURL<thumbnail>$thumbnailsPhotoURL';
-        } else {
-          photoURLWithThumbnails2 = '$photoURL<thumbnail>$photoURL';
-        }
-        purchase.kebeleIDPhoto = [photoURLWithThumbnails2];
-      }
-      if (kebleIDBack != null) {
-        String photoURL = await FirebaseStorageMethods().uploadImageToStorage(
-            "kebleIDBack/${auth.currentUser!.uid}/image/${const Uuid().v1()}",
-            kebleIDBack);
-        if (!kIsWeb) {
-          String thumbnailsPhotoURL = await FirebaseStorageMethods()
-              .uploadImageToStorageThumbnails(
-                  "sign/${auth.currentUser!.uid}/thumbnail/${const Uuid().v1()}",
-                  kebleIDBack);
-          photoURLWithThumbnails3 = '$photoURL<thumbnail>$thumbnailsPhotoURL';
-        } else {
-          photoURLWithThumbnails3 = '$photoURL<thumbnail>$photoURL';
-        }
-        purchase.kebeleIDPhoto.add(photoURLWithThumbnails3);
-      }
-
       FirebasePurchaseMethods().create(purchase, share, user);
       String date = await DateMethod().getCurrentDateAndTime();
       purchase.requestSent = [

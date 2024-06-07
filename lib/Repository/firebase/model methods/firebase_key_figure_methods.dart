@@ -1,22 +1,47 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:ssen_user/Models/company_profile_model.dart';
-import 'package:ssen_user/Models/key_figure_model.dart';
-import 'package:ssen_user/Models/log_model.dart';
-import 'package:ssen_user/Models/user_model.dart';
-import 'package:ssen_user/Repository/firebase/key%20words/collection_name.dart';
-import 'package:ssen_user/Repository/firebase/model%20abstract/firebase_key_figure_abstract.dart';
-import 'package:ssen_user/Repository/firebase/model%20methods/firebase_log_methods.dart';
+import 'dart:typed_data';
 
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/foundation.dart';
+import 'package:ssen_admin/Repository/firebase/firebase_storage_methods.dart';
 import 'package:uuid/uuid.dart';
+
+import '../../../Models/company_profile_model.dart';
+import '../../../Models/key_figure_model.dart';
+import '../../../Models/log_model.dart';
+import '../../../Models/user_model.dart';
+import '../key words/collection_name.dart';
+import '../model abstract/firebase_key_figure_abstract.dart';
+import 'firebase_log_methods.dart';
 
 class FirebaseKeyFigureMethods implements FirebaseKeyFigureAbstract {
   @override
   Future<String> create(CompanyProfileModel companyProfile,
-      KeyFigureModel keyFigure, UserModel user) async {
+      KeyFigureModel keyFigure, Uint8List? image) async {
     String res = "Some error has occured";
     keyFigure.companyId = companyProfile.identification;
     keyFigure.identification = const Uuid().v1();
+    String photoURLWithThumbnails;
+    final FirebaseAuth auth = FirebaseAuth.instance;
     try {
+      if (image != null) {
+        String photoURL = await FirebaseStorageMethods()
+            .uploadImageToStorageWithOutCompression(
+                "keyFigure/${auth.currentUser!.uid}/image/${const Uuid().v1()}",
+                image);
+        print(photoURL);
+        print(image != null);
+        if (!kIsWeb) {
+          String thumbnailsPhotoURL = await FirebaseStorageMethods()
+              .uploadImageToStorageThumbnails(
+                  "keyFigure/${auth.currentUser!.uid}/thumbnail/${const Uuid().v1()}",
+                  image);
+          photoURLWithThumbnails = '$photoURL<thumbnail>$thumbnailsPhotoURL';
+        } else {
+          photoURLWithThumbnails = '$photoURL<thumbnail>$photoURL';
+        }
+        keyFigure.image = [photoURLWithThumbnails];
+      }
       //creating announcement
       await FirebaseFirestore.instance
           .collection(CollectionName.keyFigure)
@@ -31,8 +56,14 @@ class FirebaseKeyFigureMethods implements FirebaseKeyFigureAbstract {
           .collection(CollectionName.organization)
           .doc(companyProfile.identification)
           .update({'keyFigureID': keyFigures});
-      FirebaseLogMethods().create(user, keyFigure.identification, 'product',
-          'info', 'addition', "reason", ['']);
+      // FirebaseLogMethods().create(
+      //     user,
+      //     keyFigure.identification,
+      //     ModifiedEntity.product,
+      //     LogLevel.info,
+      //     LogAction.addition,
+      //     "reason",
+      //     ['']);
       res = "success";
     } catch (err) {
       res = err.toString();

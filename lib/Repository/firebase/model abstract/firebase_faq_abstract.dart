@@ -1,5 +1,5 @@
-import 'package:ssen_user/Models/company_profile_model.dart';
-import 'package:ssen_user/Models/faq_model.dart';
+import '../../../Models/company_profile_model.dart';
+import '../../../Models/faq_model.dart';
 
 abstract class FirebaseFaqAbstract {
   Future<String> create(CompanyProfileModel companyProfile, FaqModel faqModel);

@@ -1,4 +1,4 @@
-import 'package:ssen_user/Models/company_requirement_on_secondry_market_model.dart';
+import '../../../Models/company_requirement_on_secondry_market_model.dart';
 
 abstract class FirebaseCompanyRequirementsAbstract {
   Future<String> create(

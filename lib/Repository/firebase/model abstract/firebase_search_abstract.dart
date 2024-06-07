@@ -1,4 +1,4 @@
-import 'package:ssen_user/Models/search_model.dart';
+import '../../../Models/search_model.dart';
 
 abstract class FirebaseSearchAbstract {
   // Future<String> create(CompanyProfileModel companyProfileModel);

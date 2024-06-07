@@ -1,11 +1,12 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:ssen_user/Models/company_profile_model.dart';
-import 'package:ssen_user/Models/secondry_post_share.dart';
-import 'package:ssen_user/Models/user_model.dart';
-import 'package:ssen_user/Repository/firebase/key%20words/collection_name.dart';
-import 'package:ssen_user/Repository/firebase/model%20abstract/firebase_secondry_post_share_abstract.dart';
-import 'package:ssen_user/utils/date_method.dart';
 import 'package:uuid/uuid.dart';
+
+import '../../../Models/company_profile_model.dart';
+import '../../../Models/secondry_post_share.dart';
+import '../../../Models/user_model.dart';
+import '../../../utils/date_method.dart';
+import '../key words/collection_name.dart';
+import '../model abstract/firebase_secondry_post_share_abstract.dart';
 
 class FirebaseSecondryPostShareMethods
     implements FirebaseSecondryPostShareAbstract {
