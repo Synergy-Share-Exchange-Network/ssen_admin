@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 import '../utils/constants/colors.dart';
 import '../utils/helper_function.dart';
+import '../widgets/setting_element_widget.dart';
 
 class SettingsPage extends StatefulWidget {
   static const route = "SettingsPage";
@@ -17,12 +18,12 @@ class _SettingsPageState extends State<SettingsPage> {
     return Scaffold(
       appBar: AppBar(
         centerTitle: true,
-        title: Text(
+        title: const Text(
           'Setting',
           style: TextStyle(
             fontSize: 28,
             fontWeight: FontWeight.bold,
-            color: Colors.blue,
+            color: Colors.black,
           ),
         ),
         backgroundColor: dark ? SColors.darkContainer : SColors.lightContainer,
@@ -34,82 +35,55 @@ class _SettingsPageState extends State<SettingsPage> {
               BoxConstraints(maxWidth: width > 800 ? 800 : width * 0.9),
           child: SingleChildScrollView(
             child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
+              // ignore: prefer_const_literals_to_create_immutables
               children: [
-                Divider(color: Colors.blue),
-                SizedBox(height: 16),
-                Text(
-                  'General Settings',
-                  style: TextStyle(
-                    fontSize: 22,
-                    fontWeight: FontWeight.bold,
-                    color: Colors.blue,
-                  ),
+                const SettingElementsWidget(
+                  description: 'Frequentlys',
+                  icon: Icons.question_mark_outlined,
+                  name: 'FAQs',
+                  // function: () {
+                  //   print("go to faq");
+                  // },
                 ),
-                SizedBox(height: 16),
-                SwitchListTile(
-                  title: Text('Enable Notifications'),
-                  value: true,
-                  onChanged: (bool value) {},
-                  activeColor: Colors.blue,
+                const SettingElementsWidget(
+                  description: 'terms of use,',
+                  icon: Icons.format_align_justify,
+                  name: 'Term And Condition',
+                  // function: () {
+                  //   print("go to term and condition");
+                  // },
                 ),
-                SizedBox(height: 8),
-                SwitchListTile(
-                  title: Text('Maintenance Mode'),
-                  value: false,
-                  onChanged: (bool value) {},
-                  activeColor: Colors.blue,
+                const SettingElementsWidget(
+                  description: 'description',
+                  icon: Icons.info,
+                  name: 'About',
+                  // function: () {
+                  //   print("go to faq");
+                  // },
                 ),
-                SizedBox(height: 16),
-                Text(
-                  'User Management',
-                  style: TextStyle(
-                    fontSize: 22,
-                    fontWeight: FontWeight.bold,
-                    color: Colors.blue,
-                  ),
+                const SettingElementsWidget(
+                  description: 'a set  ',
+                  icon: Icons.palette,
+                  name: 'Themes',
+                  // function: () {
+                  //   print("go to faq");
+                  // },
                 ),
-                SizedBox(height: 16),
-                ElevatedButton(
-                  onPressed: () {},
-                  style: ElevatedButton.styleFrom(primary: Colors.blue),
-                  child: Text('Add New User'),
+                const SettingElementsWidget(
+                  description: 'retrieving the ',
+                  icon: Icons.update,
+                  name: 'Check for update',
+                  // function: () {
+                  //   print("go to faq");
+                  // },
                 ),
-                SizedBox(height: 8),
-                ElevatedButton(
-                  onPressed: () {},
-                  style: ElevatedButton.styleFrom(primary: Colors.blue),
-                  child: Text('Manage Users'),
-                ),
-                SizedBox(height: 16),
-                Text(
-                  'Account Settings',
-                  style: TextStyle(
-                    fontSize: 22,
-                    fontWeight: FontWeight.bold,
-                    color: Colors.blue,
-                  ),
-                ),
-                SizedBox(height: 16),
-                TextField(
-                  decoration: InputDecoration(
-                    labelText: 'Change Email',
-                    border: OutlineInputBorder(),
-                  ),
-                ),
-                SizedBox(height: 8),
-                TextField(
-                  decoration: InputDecoration(
-                    labelText: 'Change Password',
-                    border: OutlineInputBorder(),
-                  ),
-                  obscureText: true,
-                ),
-                SizedBox(height: 16),
-                ElevatedButton(
-                  onPressed: () {},
-                  style: ElevatedButton.styleFrom(primary: Colors.blue),
-                  child: Text('Save Settings'),
+                const SettingElementsWidget(
+                  description: 'terminating  ',
+                  icon: Icons.logout,
+                  name: 'Log out',
+                  // function: () {
+                  //   print("go to faq");
+                  // },
                 ),
               ],
             ),

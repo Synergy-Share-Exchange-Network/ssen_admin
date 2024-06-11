@@ -3,7 +3,9 @@ import 'package:flutter/material.dart';
 import 'package:ssen_admin/firebase_options.dart';
 import 'package:ssen_admin/intermediate.dart';
 import 'package:ssen_admin/responsive.dart';
+import 'package:ssen_admin/screens/MLattribute_page.dart';
 import 'package:ssen_admin/screens/company_detail.dart';
+import 'package:ssen_admin/screens/desktop_responsive.dart';
 import 'package:ssen_admin/screens/state_pages/main_page.dart';
 import 'package:ssen_admin/screens/user_detail.dart';
 import 'package:ssen_admin/services/app_routes.dart';
@@ -50,8 +52,8 @@ class MyApp extends StatelessWidget {
       // home: const TermAndCondition(),
       // home: Responsive(),
 // home: CompanyDetail(),
-      // home: DesktopResponsive(),
-      home: Intermediate(),
+      home: DesktopResponsive(),
+      // home: Intermediate(),
       // home: SearchScreen(),
 
       // home: PostShareSecondary(),
@@ -63,6 +65,7 @@ class MyApp extends StatelessWidget {
       // home: HistoryWidget(),
       // home: Subscribers(),
       // home: CompanyProfileWidget(),
+      // home: MLAttribute(),
 
       onGenerateRoute: appRouter.onGenerateRoute,
     );

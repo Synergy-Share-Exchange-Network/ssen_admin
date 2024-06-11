@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/src/foundation/key.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:ssen_admin/Models/user_model.dart';
+import 'package:ssen_admin/utils/utils.dart';
 
 import '../../services/theme/text_theme.dart';
 
@@ -11,13 +12,8 @@ import '../utils/constants/colors.dart';
 import '../utils/helper_function.dart';
 
 class UserWidget extends StatelessWidget {
-  UserModel user = UserModel(
-      firstName: "Dawit Nigus",
-      lastName: "lastName",
-      phoneNumber: 'phoneNumber',
-      address: 'addis ababa, ethiopia',
-      profilePicture: ['asset/logo_image/goat.jpg']);
-  UserWidget({Key? key}) : super(key: key);
+  UserWidget({Key? key, required this.user}) : super(key: key);
+  final UserModel user;
 
   @override
   Widget build(BuildContext context) {
@@ -27,8 +23,9 @@ class UserWidget extends StatelessWidget {
         Navigator.push(
           context,
           MaterialPageRoute(
-              builder: (context) =>
-                  UserDetail()), // Replace ShareholderDetailPage() with your actual detail page
+              builder: (context) => UserDetail(
+                    user: user,
+                  )), // Replace ShareholderDetailPage() with your actual detail page
         );
       },
       child: Container(
@@ -51,7 +48,7 @@ class UserWidget extends StatelessWidget {
             ),
             CircleAvatar(
               radius: 40,
-              backgroundImage: AssetImage(user.profilePicture[0]),
+              backgroundImage: NetworkImage(getImage(user.profilePicture[0])),
             ),
             const SizedBox(
               width: 15,

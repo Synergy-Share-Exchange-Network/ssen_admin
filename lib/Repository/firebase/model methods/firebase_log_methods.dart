@@ -10,9 +10,9 @@ class FirebaseLogMethods implements FirebaseLogAbstract {
       // UserRole role,
       UserModel user,
       String id,
-      ModifiedEntity entity,
-      LogLevel level,
-      LogAction action,
+      String entity,
+      String level,
+      String action,
       String reason,
       List<String> whatChanged) async {
     String res = "";

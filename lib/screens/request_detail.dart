@@ -127,6 +127,8 @@ class _RequestDetailPageState extends State<RequestDetailPage> {
           child: Container(
             width: 500,
             child: Column(
+              mainAxisAlignment: MainAxisAlignment.start,
+              crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Row(
                   children: [
@@ -136,78 +138,61 @@ class _RequestDetailPageState extends State<RequestDetailPage> {
                           NetworkImage(getImage(widget.company.logoImage[0])),
                     ),
                     SizedBox(width: 16),
-                    Expanded(
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text(
-                            widget.company.name,
-                            style: TextStyle(
-                              fontSize: 20,
-                              fontWeight: FontWeight.bold,
-                            ),
+                    Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          widget.company.name,
+                          style: TextStyle(
+                            fontSize: 20,
+                            fontWeight: FontWeight.bold,
                           ),
-                          Text(widget.company.email),
-                          SizedBox(
-                            width: 10,
+                        ),
+                        Text(widget.company.email),
+                        SizedBox(
+                          width: 10,
+                        ),
+                        Text(widget.company.phoneNumber),
+                      ],
+                    ),
+                  ],
+                ),
+                SizedBox(height: 16),
+                Text(
+                  'Date:  ',
+                  style: TextStyle(fontWeight: FontWeight.bold),
+                ),
+                Text(widget.company.createdDay),
+                SizedBox(height: 16),
+                Container(
+                  padding: EdgeInsets.all(8),
+                  child: Text(
+                    "Trade Lisense",
+                    style: STextTheme.lightTextTheme.headlineSmall,
+                  ),
+                ),
+                Padding(
+                  padding: const EdgeInsets.all(4.0),
+                  child: Image.network(
+                    getImage(widget.company.tradeLicense[0]),
+                    height: 250,
+                  ),
+                ),
+                SizedBox(height: 16),
+                Column(
+                  children: [
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      children: [
+                        Container(
+                          padding: EdgeInsets.all(8),
+                          child: Text(
+                            "Share Lisense",
+                            style: STextTheme.lightTextTheme.headlineSmall,
                           ),
-                          Text(widget.company.phoneNumber),
-                        ],
-                      ),
+                        ),
+                      ],
                     ),
-                  ],
-                ),
-                SizedBox(height: 16),
-                Row(
-                  children: [
-                    Text(
-                      'Date:',
-                      style: TextStyle(fontWeight: FontWeight.bold),
-                    ),
-                    Text(widget.company.createdDay),
-                  ],
-                ),
-                SizedBox(height: 16),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  children: [
-                    Container(
-                      padding: EdgeInsets.all(8),
-                      child: Text(
-                        "Trade Lisense",
-                        style: STextTheme.lightTextTheme.headlineSmall,
-                      ),
-                    ),
-                  ],
-                ),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  children: [
-                    Padding(
-                      padding: const EdgeInsets.all(4.0),
-                      child: Image.network(
-                        getImage(widget.company.tradeLicense[0]),
-                        height: 250,
-                      ),
-                    ),
-                  ],
-                ),
-                SizedBox(height: 16),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  children: [
-                    Container(
-                      padding: EdgeInsets.all(8),
-                      child: Text(
-                        "Share Lisense",
-                        style: STextTheme.lightTextTheme.headlineSmall,
-                      ),
-                    ),
-                  ],
-                ),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  children: [
                     Padding(
                       padding: const EdgeInsets.all(4.0),
                       child: Image.network(

@@ -3,20 +3,10 @@ import 'package:ssen_admin/Models/user_model.dart';
 import 'package:ssen_admin/utils/constants.dart';
 
 class UserDetail extends StatelessWidget {
-  UserModel user = UserModel(
-      profilePicture: ["asset/logo_image/goat.jpg"],
-      firstName: "Dawit Nigus",
-      lastName: "lastName",
-      phoneNumber: "+25197352738",
-      region: "oromia/west region",
-      birthDate: "22/03/1996",
-      email: "dawitnigus@gmail.com",
-      kebeleIDPhoto: ["asset/logo_image/goat.jpg", "asset/logo_image/goat.jpg"],
-      gender: "male",
-      address: ["hawassa ethiopia"],
-      isEnabled: true,
-      isBanned: false,
-      isDeleted: true);
+  final UserModel user;
+
+  const UserDetail({Key? key, required this.user}) : super(key: key);
+
   @override
   Widget build(BuildContext context) {
     bool isMobile = MediaQuery.of(context).size.width < 600;
